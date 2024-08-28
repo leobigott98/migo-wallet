@@ -32,6 +32,15 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="others"
+        options={{
+          title: 'Others',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'code-download' : 'code-download-outline'} color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }

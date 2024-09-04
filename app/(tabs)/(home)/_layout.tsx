@@ -5,21 +5,49 @@ export default function HomeLayout() {
     <Stack
       screenOptions={{
         headerShown: false,
-        /* headerStyle: {
-          backgroundColor: '#f4511e',
+        headerStyle: {
+          //backgroundColor: '#f4511e',
+          
         },
-        headerTintColor: '#fff',
+        //headerTintColor: '#fff',
         headerTitleStyle: {
           fontWeight: 'bold',
-        }, */
+        },
       }}
       >
-      <Stack.Screen name="index" />
-      <Stack.Screen name="add-money" />
-      <Stack.Screen name="withdraw" />
-      <Stack.Screen name="pay" />
-      <Stack.Screen name="transfer" />
-      <Stack.Screen name="wallet-info/[id]" />
+      <Stack.Screen name="index"
+      options={{
+        title: 'Home'
+      }} />
+      <Stack.Screen 
+        name="add-money" 
+        options={{
+          headerShown: true,
+          title: 'Recargar'
+        }} />
+      <Stack.Screen 
+        name="withdraw" 
+        options={{
+          headerShown: true,
+          title: 'Retirar'
+        }}/>
+      <Stack.Screen 
+        name="pay"
+        options={{
+          headerShown: true,
+          title: 'Pagar'
+        }} />
+      <Stack.Screen 
+        name="transfer"
+        options={{
+          headerShown: true,
+          title: 'Transferir'
+        }} />
+      <Stack.Screen 
+        name="wallet-info/[id]"
+        options={{
+          headerShown: true
+        }} />
     </Stack>
   );
 }

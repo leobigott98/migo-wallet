@@ -10,9 +10,14 @@ export default function AddMoneyLayout() {
         },
       }}
       >
-      <Stack.Screen name="add_international-card"
+      <Stack.Screen name="add-international-card"
       options={{
-        title: 'Agregar Tarjeta Internacional'
+        headerShown: true,
+        title: 'Agregar Tarjeta Internacional',
+        /* animation: 'slide_from_bottom',
+        animationTypeForReplace: 'push',
+        animationDuration: 350, */
+        
       }} />
       <Stack.Screen 
         name="add-national-card" 

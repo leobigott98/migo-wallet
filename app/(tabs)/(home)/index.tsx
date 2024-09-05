@@ -7,19 +7,21 @@ import {
   StatusBar,
   SafeAreaView,
   Dimensions,
-  Pressable,
+  Image
 } from "react-native";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import Fontisto from "@expo/vector-icons/Fontisto";
+import Carousel from "react-native-reanimated-carousel";
 
 export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
+      <ScrollView contentContainerStyle={styles.scrollView}>  
         <View style={styles.card}>
           <Text style={styles.migo}>MiGo</Text>
+          {/* <Image source={require('@/assets/images/card-chip.png')} style={styles.chipImage}/> */}
           <Text style={styles.cardBearer}>Leonardo A. Bigott C.</Text>
           <View style={styles.amountAvailable}>
             <Text style={styles.amountText}>Disponible</Text>
@@ -362,4 +364,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  chipImage: {
+    width: 50,
+    height: 50,
+    resizeMode: 'contain',
+    position: 'relative',
+    left: 10
+  }
 });
+

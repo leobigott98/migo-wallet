@@ -1,53 +1,48 @@
 import { Stack } from 'expo-router';
 
-export default function HomeLayout() {
+export default function PayLayout() {
   return (
     <Stack
       screenOptions={{
         headerShown: false,
-        headerStyle: {
-          //backgroundColor: '#f4511e',
-          
-        },
-        //headerTintColor: '#fff',
         headerTitleStyle: {
           fontWeight: 'bold',
         },
       }}
       >
-      <Stack.Screen name="index"
+      <Stack.Screen name="digitel"
       options={{
-        title: 'Home'
+        title: 'Pagar Digitel'
       }} />
       <Stack.Screen 
-        name="(add-money)" 
+        name="movistar" 
         options={{
           headerShown: true,
-          title: 'Recargar'
+          title: 'Pagar Movistar'
         }} />
       <Stack.Screen 
-        name="withdraw" 
+        name="movilnet" 
         options={{
           headerShown: true,
-          title: 'Retirar'
+          title: 'Pagar Movilnet'
         }}/>
       <Stack.Screen 
-        name="(pay)"
+        name="simpletv"
         options={{
           headerShown: true,
-          title: 'Pagar',
-          headerTitle: 'Pago de Servicios'
+          title: 'Pagar SimpleTV'
         }} />
       <Stack.Screen 
-        name="transfer"
+        name="inter"
         options={{
           headerShown: true,
-          title: 'Transferir'
+          title: 'Pagar Inter'
         }} />
       <Stack.Screen 
-        name="wallet-info/[id]"
+        name="cantv"
         options={{
-          headerShown: true
+          headerShown: true,
+          title: 'Pagar Cantv'
         }} />
     </Stack>
   );

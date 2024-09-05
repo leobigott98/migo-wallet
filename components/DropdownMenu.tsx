@@ -13,7 +13,7 @@ import DropdownOption from "./DropdownOption";
     return(
         <Pressable style={[timesPressed%2 == 0? {height: 60} : {height: 100}, styles.rechargeOption]} onPress={()=>{setTimesPressed(timesPressed + 1) }}>
             <Text style={{color: 'white', fontSize: 12, fontWeight: 'bold'}}>{props.name}</Text>
-            {timesPressed%2 == 0? <></> : <DropdownOption type={props.type} redirect="add-national-card"/>}
+            {timesPressed%2 == 0? <></> : <DropdownOption type={props.type} redirect="add-international-card"/>}
           </Pressable>
     )
   }

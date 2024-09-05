@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   View,
   Text,
@@ -11,7 +10,7 @@ import {
 } from "react-native";
 import DropdownMenu from "@/components/DropdownMenu";
 
-export default function HomeScreen() {
+export default function AddMoneyScreen() {
 
   return (
     <SafeAreaView style={styles.container}>

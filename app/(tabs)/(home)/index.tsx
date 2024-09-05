@@ -60,7 +60,7 @@ export default function HomeScreen() {
                 <Ionicons name="receipt" size={38} color="black" />
               </Link>
             </View>
-            <Text style={{ fontWeight: "bold", fontSize: 12 }}>Pagar</Text>
+            <Text style={{ fontWeight: "bold", fontSize: 12 }}>Servicios</Text>
           </View>
           <View style={{ alignItems: "center", justifyContent: "center" }}>
             <View style={styles.option}>

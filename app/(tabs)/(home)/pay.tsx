@@ -6,7 +6,7 @@ import {
   StatusBar,
   SafeAreaView,
   Dimensions, 
-  Pressable
+  Image
 } from "react-native";
 
 export default function PayScreen() {
@@ -23,7 +23,24 @@ export default function PayScreen() {
         </View>
         <ScrollView contentContainerStyle={styles.rechargeOptionsBox}>
           <Text style={{fontWeight: '500'}}>Opciones de Pago</Text>
-          
+          <View style={styles.imageContainer}>
+            <Image source={require('@/assets/images/logos/digitel-logo.png')} style={styles.optionImage}/>
+          </View>
+          <View style={styles.imageContainer}>
+            <Image source={require('@/assets/images/logos/movistar-logo.png')} style={styles.optionImage}/>
+          </View>
+          <View style={styles.imageContainer}>
+            <Image source={require('@/assets/images/logos/movilnet-logo.png')} style={styles.optionImage}/>
+          </View>
+          <View style={styles.imageContainer}>
+            <Image source={require('@/assets/images/logos/simpletv-logo.png')} style={styles.optionImage}/>
+          </View>
+          <View style={styles.imageContainer}>
+            <Image source={require('@/assets/images/logos/inter-logo.png')} style={styles.optionImage}/>
+          </View>
+          <View style={styles.imageContainer}>
+            <Image source={require('@/assets/images/logos/cantv-logo.png')} style={styles.optionImage}/>
+          </View>
         </ScrollView>
       </ScrollView>
     </SafeAreaView>
@@ -67,6 +84,8 @@ const styles = StyleSheet.create({
     padding: 15,
     width: Dimensions.get("screen").width*0.85,
     justifyContent: 'space-between',
+    display: 'flex',
+    marginBottom: 10
   },
   rechargeOption: {
     backgroundColor: '#0077B6',
@@ -74,5 +93,26 @@ const styles = StyleSheet.create({
     marginTop: 10,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  optionImage:{
+    width: 50,
+    height: 50,
+    resizeMode: 'contain'
+  }, 
+  imageContainer:{
+    backgroundColor: 'white',
+    borderColor: '#D9D9D9',
+    borderWidth: 1,
+    margin: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 5,
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 4,
+      height: 4,
+    },
+    shadowOpacity: 0.25,
   }
 });

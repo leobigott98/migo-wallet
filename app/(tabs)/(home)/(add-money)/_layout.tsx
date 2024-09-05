@@ -1,53 +1,48 @@
 import { Stack } from 'expo-router';
 
-export default function HomeLayout() {
+export default function AddMoneyLayout() {
   return (
     <Stack
       screenOptions={{
         headerShown: false,
-        headerStyle: {
-          //backgroundColor: '#f4511e',
-          
-        },
-        //headerTintColor: '#fff',
         headerTitleStyle: {
           fontWeight: 'bold',
         },
       }}
       >
-      <Stack.Screen name="index"
+      <Stack.Screen name="add_international-card"
       options={{
-        title: 'Home'
+        title: 'Agregar Tarjeta Internacional'
       }} />
       <Stack.Screen 
-        name="(add-money)" 
+        name="add-national-card" 
         options={{
           headerShown: true,
-          title: 'Recargar'
+          title: 'Agregar Tarjeta Nacional'
         }} />
       <Stack.Screen 
-        name="withdraw" 
+        name="international-card" 
         options={{
           headerShown: true,
-          title: 'Retirar'
+          title: 'Recarga con Tarjeta Internacional'
         }}/>
       <Stack.Screen 
-        name="pay"
+        name="national-card"
         options={{
           headerShown: true,
-          title: 'Pagar',
-          headerTitle: 'Pago de Servicios'
+          title: 'Recarga con Tarjeta Nacional'
         }} />
       <Stack.Screen 
-        name="transfer"
+        name="pago-movil-c2p"
         options={{
           headerShown: true,
-          title: 'Transferir'
+          title: 'Recarga con Pago Móvil C2P'
         }} />
       <Stack.Screen 
-        name="wallet-info/[id]"
+        name="pago-movil-p2c"
         options={{
-          headerShown: true
+          headerShown: true,
+          title: 'Recarga con Pago Móvil P2C'
         }} />
     </Stack>
   );

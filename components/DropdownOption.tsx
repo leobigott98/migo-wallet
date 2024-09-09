@@ -1,5 +1,5 @@
 //import { useState } from "react";
-import { Link } from "expo-router";
+import { Href, Link } from "expo-router";
 import {
     View,
     Text,
@@ -8,14 +8,14 @@ import {
   } from "react-native";
   import Ionicons from '@expo/vector-icons/Ionicons';
 
-  export default function DropdownOption ( props: {type: string, redirect: string} ){
+  export default function DropdownOption ( props: {redirect?: Href, name: string} ){
     //const [timesPressed, setTimesPressed] = useState(0)
 
     return(
       <View style={styles.dropdownOption}>
-        <Link style={{alignItems: 'center', justifyContent: 'center', display: 'flex', flexDirection: 'row' }} href={props.redirect}>
+        <Link style={{alignItems: 'center', justifyContent: 'center', display: 'flex', flexDirection: 'row' }} href={props.redirect? props.redirect : '/'}>
             <Ionicons name="add-circle-outline" size={24} color="black" style={{position: 'relative', right: '100%'}} />
-            <Text style={{color: 'white', fontSize: 14, fontWeight: 'bold'}}>Agregar Tarjeta</Text>
+            <Text style={{color: 'white', fontSize: 14, fontWeight: 'bold'}}>{props.name}</Text>
         </Link>
 
       </View>

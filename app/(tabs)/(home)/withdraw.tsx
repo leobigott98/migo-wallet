@@ -24,7 +24,7 @@ export default function WithdrawScreen() {
         </View>
         <ScrollView contentContainerStyle={styles.rechargeOptionsBox}>
           <Text style={{fontWeight: '500'}}>Opciones de Retiro</Text>
-          <DropdownMenu name='Pago Móvil' type='pago-movil'/>
+          <DropdownMenu name='Pago Móvil' type='pago-movil' redirect="/"/>
         </ScrollView>
       </ScrollView>
     </SafeAreaView>

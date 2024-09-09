@@ -20,7 +20,7 @@ export default function HomeLayout() {
         title: 'Home'
       }} />
       <Stack.Screen 
-        name="(add-money)" 
+        name="add-money" 
         options={{
           headerShown: true,
           title: 'Recargar'
@@ -32,7 +32,7 @@ export default function HomeLayout() {
           title: 'Retirar'
         }}/>
       <Stack.Screen 
-        name="(pay)"
+        name="pay"
         options={{
           headerShown: true,
           title: 'Pagar',

@@ -10,10 +10,12 @@ export default function PayLayout() {
         },
       }}
       >
-      <Stack.Screen name="digitel"
-      options={{
-        title: 'Pagar Digitel'
-      }} />
+      <Stack.Screen 
+        name="digitel"
+        options={{
+          headerShown: true,
+          title: 'Pagar Digitel',
+        }} />
       <Stack.Screen 
         name="movistar" 
         options={{

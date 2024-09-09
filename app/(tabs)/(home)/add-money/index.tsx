@@ -9,6 +9,7 @@ import {
     Pressable
   } from "react-native";
   import DropdownMenu from "@/components/DropdownMenu";
+import DropdownOption from "@/components/DropdownOption";
   
   export default function AddMoneyScreen() {
   
@@ -24,10 +25,18 @@ import {
           </View>
           <ScrollView contentContainerStyle={styles.rechargeOptionsBox}>
             <Text style={{fontWeight: '500'}}>Opciones de Recarga</Text>
-            <DropdownMenu name='Tarjeta de Crédito/Débito Nacional' type='card'/>
-            <DropdownMenu name='Tarjeta Internacional' type='card'/>
-            <DropdownMenu name='Pago Móvil' type='pago-movil'/>
-            <DropdownMenu name='Zelle' type='zelle'/>
+            <DropdownMenu name='Tarjeta de Crédito/Débito Nacional'>
+              <DropdownOption name="Agregar Tarjeta" redirect="/(home)/add-money/add-national-card"/>
+            </DropdownMenu>
+            <DropdownMenu name='Tarjeta Internacional'>
+              <DropdownOption name="Agregar Tarjeta" redirect="/(home)/add-money/add-national-card"/>
+            </DropdownMenu>
+            <DropdownMenu name='Pago Móvil'>
+              <DropdownOption name="Agregar Tarjeta" redirect="/(home)/add-money/add-national-card"/>
+            </DropdownMenu>
+            <DropdownMenu name='Zelle'>
+              <DropdownOption name="Agregar Tarjeta" redirect="/(home)/add-money/add-national-card"/>
+            </DropdownMenu>
           </ScrollView>
         </ScrollView>
       </SafeAreaView>

@@ -24,11 +24,15 @@ import {
           </View>
           <ScrollView contentContainerStyle={styles.rechargeOptionsBox}>
             <Text style={{fontWeight: '500'}}>Opciones de Pago:</Text>
-            <Link href="digitel" style={styles.imageContainer}>
-              <Image source={require('@/assets/images/logos/digitel-logo.png')} style={styles.optionImage}/>
-            </Link>
             <View style={styles.imageContainer}>
-              <Image source={require('@/assets/images/logos/movistar-logo.png')} style={styles.optionImage}/>
+              <Link href="/digitel">
+                <Image source={require('@/assets/images/logos/digitel-logo.png')} style={styles.optionImage}/>
+              </Link>
+            </View>
+            <View style={styles.imageContainer}>
+              <Link href="/movistar">
+                <Image source={require('@/assets/images/logos/movistar-logo.png')} style={styles.optionImage}/>
+              </Link>
             </View>
             <View style={styles.imageContainer}>
               <Image source={require('@/assets/images/logos/movilnet-logo.png')} style={styles.optionImage}/>

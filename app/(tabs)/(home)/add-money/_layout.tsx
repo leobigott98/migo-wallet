@@ -14,9 +14,9 @@ export default function AddMoneyLayout() {
       options={{
         headerShown: true,
         title: 'Agregar Tarjeta Internacional',
-        /* animation: 'slide_from_bottom',
+        animation: 'slide_from_bottom',
         animationTypeForReplace: 'push',
-        animationDuration: 350, */
+        animationDuration: 350,
         
       }} />
       <Stack.Screen 

@@ -16,6 +16,7 @@ import Fontisto from "@expo/vector-icons/Fontisto";
 import Carousel from "react-native-reanimated-carousel";
 
 export default function HomeScreen() {
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>  
@@ -31,7 +32,7 @@ export default function HomeScreen() {
             </View>
           </View>
         </View>
-        <ScrollView style={styles.optionsCarousel} horizontal>
+        <ScrollView style={styles.optionsCarousel} horizontal contentContainerStyle={{}}>
           <View style={{ alignItems: "center", justifyContent: "center" }}>
             <View style={styles.option}>
               <Link href="/add-money">
@@ -303,7 +304,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   optionsCarousel: {
-    marginHorizontal: 10,
+    paddingHorizontal: 10,
     paddingBottom: 10,
   },
   option: {

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { ReactElement, useState } from "react";
+import { Href } from "expo-router";
 import {
     Text,
     StyleSheet,
@@ -7,13 +8,19 @@ import {
   } from "react-native";
 import DropdownOption from "./DropdownOption";
 
-  export default function DropdownMenu ( props: { name: string, type: string } ){
+type Props = {
+  child: JSX.Element
+}
+
+  export default function DropdownMenu ( props: { name: string, children: ReactElement} ){
     const [timesPressed, setTimesPressed] = useState(0)
 
     return(
         <Pressable style={[timesPressed%2 == 0? {height: 60} : {height: 100}, styles.rechargeOption]} onPress={()=>{setTimesPressed(timesPressed + 1) }}>
             <Text style={{color: 'white', fontSize: 12, fontWeight: 'bold'}}>{props.name}</Text>
-            {timesPressed%2 == 0? <></> : <DropdownOption type={props.type} redirect="add-international-card"/>}
+            {timesPressed%2 == 0? <></> : <>
+              {props.children}
+            </>}
           </Pressable>
     )
   }

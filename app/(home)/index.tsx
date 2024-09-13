@@ -13,6 +13,7 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import Fontisto from "@expo/vector-icons/Fontisto";
+import { LinearGradient } from "expo-linear-gradient";
 import Carousel from "react-native-reanimated-carousel";
 
 export default function HomeScreen() {
@@ -20,10 +21,19 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>  
+        <Text style={{fontSize: 24, fontWeight: '600', position: 'relative', right: 80, margin: 10 }}>Hola Leonardo,</Text>
         <View style={styles.card}>
-          <Text style={styles.migo}>MiGo</Text>
-          {/* <Image source={require('@/assets/images/card-chip.png')} style={styles.chipImage}/> */}
-          <Text style={styles.cardBearer}>Leonardo A. Bigott C.</Text>
+          <LinearGradient
+            colors={["#5de0e6", "#004aad"]}
+            start={[0, 0]}
+            end={[1, 1]}
+            style={styles.linearGradient}
+          >
+            <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={styles.migo}>USD Wallet</Text>
+            <Image source={require('@/assets/images/logo_migo.png')} style={styles.chipImage}/>
+            </View> 
+          <Text style={styles.cardBearer}>$185,00</Text>
           <View style={styles.amountAvailable}>
             <Text style={styles.amountText}>Disponible</Text>
             <View style={styles.amount}>
@@ -31,6 +41,8 @@ export default function HomeScreen() {
               <Text style={styles.amountCents}>00</Text>
             </View>
           </View>
+          </LinearGradient>
+          
         </View>
         <ScrollView style={styles.optionsCarousel} horizontal contentContainerStyle={{}}>
           <View style={{ alignItems: "center", justifyContent: "center" }}>
@@ -250,22 +262,28 @@ const styles = StyleSheet.create({
     //justifyContent: 'center',
     width: 320,
     height: 190,
-    //alignItems: 'center',
-    padding: 10,
-    backgroundColor: "#00B4D8",
-    borderRadius: 10,
-    margin: 10,
+    //alignItems: 'center', 
+    margin: 10,  
     shadowColor: "#000000",
     shadowOffset: {
       width: 4,
       height: 4,
     },
     shadowOpacity: 0.25,
+    shadowRadius: 10,
+  },
+  linearGradient: {
+    width: '100%',
+    height: '100%',
+    padding: 10,
+    //backgroundColor: "#00B4D8",
+    borderRadius: 10, 
   },
   migo: {
-    fontSize: 24,
-    color: "#ffffff",
+    fontSize: 12,
+    color: "#000000",
     margin: 10,
+    fontWeight: 'bold'
   },
   cardBearer: {
     fontSize: 18,
@@ -366,11 +384,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   chipImage: {
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 40,
     resizeMode: 'contain',
     position: 'relative',
-    left: 10
+    right: 10
   }
 });
 

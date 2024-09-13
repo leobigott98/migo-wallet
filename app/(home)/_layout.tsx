@@ -4,9 +4,9 @@ export default function HomeLayout() {
   return (
     <Stack
       screenOptions={{
-        headerShown: false,
+        headerShown: true,
         headerStyle: {
-          //backgroundColor: '#f4511e',
+          backgroundColor: 'transparent',
           
         },
         //headerTintColor: '#fff',

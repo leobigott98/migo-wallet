@@ -7,14 +7,15 @@ import {
   StatusBar,
   SafeAreaView,
   Dimensions,
-  Image
+  Image,
+  Pressable,
 } from "react-native";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import Fontisto from "@expo/vector-icons/Fontisto";
-import { LinearGradient } from "expo-linear-gradient";
-import Carousel from "react-native-reanimated-carousel";
+import CardsCarousel from "../../components/CardsCarousel"; 
+import Card from "@/components/Card";
 
 export default function HomeScreen() {
 
@@ -22,82 +23,94 @@ export default function HomeScreen() {
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>  
         <Text style={{fontSize: 24, fontWeight: '600', position: 'relative', right: 80, margin: 10 }}>Hola Leonardo,</Text>
-        <View style={styles.card}>
-          <LinearGradient
-            colors={["#5de0e6", "#004aad"]}
-            start={[0, 0]}
-            end={[1, 1]}
-            style={styles.linearGradient}
-          >
-            <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.migo}>USD Wallet</Text>
-            <Image source={require('@/assets/images/logo_migo.png')} style={styles.chipImage}/>
-            </View> 
-          <Text style={styles.cardBearer}>$185,00</Text>
-          <View style={styles.amountAvailable}>
-            <Text style={styles.amountText}>Disponible</Text>
-            <View style={styles.amount}>
-              <Text style={styles.amountNumber}>$185,</Text>
-              <Text style={styles.amountCents}>00</Text>
-            </View>
-          </View>
-          </LinearGradient>
-          
-        </View>
+        <CardsCarousel/>       
+        
+        <Text style={{position: 'relative', right: 120, fontSize: 20, fontWeight: '500', marginTop: 5}}>Opciones</Text>
         <ScrollView style={styles.optionsCarousel} horizontal contentContainerStyle={{}}>
           <View style={{ alignItems: "center", justifyContent: "center" }}>
-            <View style={styles.option}>
-              <Link href="/add-money">
-                <MaterialCommunityIcons
-                  name="cash-plus"
-                  size={45}
-                  color="black"
-                />
-              </Link>
-            </View>
-            <Text style={{ fontWeight: "bold", fontSize: 12 }}>Recargar</Text>
+          <Link href="/add-money" asChild >
+          <Pressable > 
+          {({pressed}) => (
+          <View style={pressed? [{backgroundColor: 'lightgray'}, styles.option] : [{backgroundColor: 'white'}, styles.option]}>
+          <Text style={{ fontWeight: "bold", fontSize: 12 }}>Recargar</Text> 
+              <MaterialCommunityIcons
+                name="cash-plus"
+                size={45}
+                color="black"
+              />
+          </View>
+        )}
+           
+            </Pressable>
+            </Link>
           </View>
           <View style={{ alignItems: "center", justifyContent: "center" }}>
-            <View style={styles.option}>
-              <Link href="/withdraw">
-                <MaterialCommunityIcons
+          <Link href="/withdraw" asChild >
+          <Pressable > 
+          {({pressed}) => (
+          <View style={pressed? [{backgroundColor: 'lightgray'}, styles.option] : [{backgroundColor: 'white'}, styles.option]}>
+          <Text style={{ fontWeight: "bold", fontSize: 12 }}>Retirar</Text> 
+            <MaterialCommunityIcons
                   name="cash-fast"
                   size={45}
                   color="black"
                 />
-              </Link>
-            </View>
-            <Text style={{ fontWeight: "bold", fontSize: 12 }}>Retirar</Text>
+          </View>
+        )}
+           
+            </Pressable>
+            </Link>
+            
           </View>
           <View style={{ alignItems: "center", justifyContent: "center" }}>
-            <View style={styles.option}>
-              <Link href="/pay">
-                <Ionicons name="receipt" size={38} color="black" />
-              </Link>
-            </View>
-            <Text style={{ fontWeight: "bold", fontSize: 12 }}>Servicios</Text>
+          <Link href="/pay" asChild >
+          <Pressable > 
+          {({pressed}) => (
+          <View style={pressed? [{backgroundColor: 'lightgray'}, styles.option] : [{backgroundColor: 'white'}, styles.option]}>
+          <Text style={{ fontWeight: "bold", fontSize: 12 }}>Servicios</Text> 
+          <Ionicons name="receipt" size={35} color="black" style={{padding: 5}} />
+          </View>
+        )}
+           
+            </Pressable>
+            </Link>
+            
           </View>
           <View style={{ alignItems: "center", justifyContent: "center" }}>
-            <View style={styles.option}>
-              <Link href="/transfer">
-                <FontAwesome6
+          <Link href="/transfer" asChild >
+          <Pressable > 
+          {({pressed}) => (
+          <View style={pressed? [{backgroundColor: 'lightgray'}, styles.option] : [{backgroundColor: 'white'}, styles.option]}>
+          <Text style={{ fontWeight: "bold", fontSize: 12 }}>Transferir</Text> 
+              <FontAwesome6
                   name="money-bill-transfer"
                   size={35}
                   color="black"
+                  style={{padding: 5}}
                 />
-              </Link>
-            </View>
-            <Text style={{ fontWeight: "bold", fontSize: 12 }}>Transferir</Text>
+          </View>
+        )}
+           
+            </Pressable>
+            </Link>
+            
           </View>
           <View style={{ alignItems: "center", justifyContent: "center" }}>
-            <View style={styles.option}>
-              <Fontisto name="wallet" size={32} color="black" />
-            </View>
-            <Text style={{ fontWeight: "bold", fontSize: 12 }}>
-              CrediExpress
-            </Text>
+          <Link href="/add-money" asChild >
+          <Pressable > 
+          {({pressed}) => (
+          <View style={pressed? [{backgroundColor: 'lightgray'}, styles.option] : [{backgroundColor: 'white'}, styles.option]}>
+          <Text style={{ fontWeight: "bold", fontSize: 10 }}>CrediExpress</Text> 
+          <Fontisto name="wallet" size={35} color="black" style={{padding: 5}}/>
+          </View>
+        )}
+           
+            </Pressable>
+            </Link>
+            
           </View>
         </ScrollView>
+        <Text style={{position: 'relative', right: 63, fontSize: 20, fontWeight: '500', marginBottom: 5}}>Últimas transacciones</Text>
         <ScrollView style={styles.transactionsBox}>
           <View style={styles.transaction}>
             <View style={{ position: "relative", left: 20 }}>
@@ -258,12 +271,13 @@ const styles = StyleSheet.create({
     //marginHorizontal: 10,
     //backgroundColor: 'pink',
   },
-  card: {
-    //justifyContent: 'center',
-    width: 320,
-    height: 190,
-    //alignItems: 'center', 
-    margin: 10,  
+  optionsCarousel: {
+    paddingHorizontal: 10,
+    paddingBottom: 15,
+    paddingTop: 10
+  },
+  option: {
+    //backgroundColor: "white",
     shadowColor: "#000000",
     shadowOffset: {
       width: 4,
@@ -271,79 +285,17 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 10,
-  },
-  linearGradient: {
-    width: '100%',
-    height: '100%',
-    padding: 10,
-    //backgroundColor: "#00B4D8",
-    borderRadius: 10, 
-  },
-  migo: {
-    fontSize: 12,
-    color: "#000000",
-    margin: 10,
-    fontWeight: 'bold'
-  },
-  cardBearer: {
-    fontSize: 18,
-    color: "#ffffff",
-    marginLeft: 10,
-  },
-  amountAvailable: {
-    position: "relative",
-    marginLeft: "auto",
-    top: 10,
-    right: 10,
-  },
-  amountText: {
-    fontSize: 18,
-    color: "#ffffff",
-    marginLeft: 10,
-  },
-  amountNumber: {
-    fontSize: 30,
-    color: "#ffffff",
-    marginLeft: 10,
-    alignSelf: "flex-start",
-    margin: 0,
-    padding: 0,
-  },
-  amountCents: {
-    fontSize: 18,
-    color: "#ffffff",
-    marginLeft: 0,
-    alignSelf: "flex-start",
-    marginTop: "auto",
-  },
-  amount: {
-    display: "flex",
-    width: 100,
-    flexDirection: "row",
-  },
-  optionsCarousel: {
-    paddingHorizontal: 10,
-    paddingBottom: 10,
-  },
-  option: {
-    backgroundColor: "white",
-    shadowColor: "#000000",
-    shadowOffset: {
-      width: 4,
-      height: 4,
-    },
-    shadowOpacity: 0.25,
-    borderRadius: 100,
+    borderRadius: 20,
     margin: 5,
-    width: 70,
-    height: 70,
+    width: 80,
+    height: 90,
     alignItems: "center",
     justifyContent: "center",
   },
   transactionsBox: {
     marginHorizontal: 20,
     backgroundColor: "white",
-    borderRadius: 10,
+    borderRadius: 20,
     height: 297,
     marginVertical: 5,
   },
@@ -352,8 +304,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: 320,
     height: 95,
-    borderBottomColor: "lightgray",
-    borderBottomWidth: 1,
+    //borderBottomColor: "lightgray",
+    //borderBottomWidth: 1,
     alignItems: "center",
     //justifyContent: 'center'
   },
@@ -365,13 +317,14 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: Dimensions.get("screen").width,
     backgroundColor: "white",
-    height: 50,
+    height: 70,
     shadowColor: "#000000",
     shadowOffset: {
-      width: 4,
-      height: -4,
+      width: -2,
+      height: -2,
     },
     shadowOpacity: 0.25,
+    shadowRadius: 20
   },
   barOption: {
     width: 150,
@@ -382,13 +335,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     alignItems: "center",
     justifyContent: "center",
-  },
-  chipImage: {
-    width: 40,
-    height: 40,
-    resizeMode: 'contain',
-    position: 'relative',
-    right: 10
   }
 });
 

@@ -26,7 +26,7 @@ export default function HomeLayout() {
         headerTitleAlign: 'left',
         //headerTintColor: '#fff',
         headerTitleStyle: {
-          fontWeight: 'bold',
+          fontWeight: 'bold'
         },
       }}
       >

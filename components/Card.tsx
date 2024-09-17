@@ -8,20 +8,22 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Dimensions } from "react-native";
 
 type Props = {
-    width: number
+    width: number,
+    currency: string,
+    colors: [string, string]
 }
 
-export default function Card({width}: Props){
+export default function Card({width, currency, colors}: Props){
     return(
         <View style={[{width: width}, styles.card]}>
           <LinearGradient
-            colors={["#5de0e6", "#004aad"]}
+            colors={colors}
             start={[0, 0]}
             end={[1, 1]}
             style={styles.linearGradient}
           >
             <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.migo}>USD Wallet</Text>
+            <Text style={styles.migo}>{currency} Wallet</Text>
             <Image source={require('@/assets/images/logo_migo.png')} style={styles.chipImage}/>
             </View> 
           <Text style={styles.cardBearer}>$185,00</Text>
@@ -41,7 +43,7 @@ export default function Card({width}: Props){
 const styles = StyleSheet.create({
     card: {
       //justifyContent: 'center',
-      height: 190,
+      height: 210,
       //alignItems: 'center', 
       //margin: 10,  
       shadowColor: "#000000",

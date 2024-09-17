@@ -7,16 +7,10 @@ import {
   StatusBar,
   SafeAreaView,
   Dimensions,
-  Image,
-  Pressable,
 } from "react-native";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import Fontisto from "@expo/vector-icons/Fontisto";
 import CardsCarousel from "../../components/CardsCarousel"; 
-import Card from "@/components/Card";
 import TransactionsList from "@/components/TransactionsList";
+import OptionsCarousel from "@/components/OptionsCarousel";
 
 export default function HomeScreen() {
 
@@ -27,90 +21,8 @@ export default function HomeScreen() {
         <CardsCarousel/>       
         
         <Text style={{position: 'relative', right: 120, fontSize: 20, fontWeight: '500', marginTop: 5}}>Opciones</Text>
-        <ScrollView style={styles.optionsCarousel} horizontal contentContainerStyle={{}}>
-          <View style={{ alignItems: "center", justifyContent: "center" }}>
-          <Link href="/add-money" asChild >
-          <Pressable > 
-          {({pressed}) => (
-          <View style={pressed? [{backgroundColor: 'lightgray'}, styles.option] : [{backgroundColor: 'white'}, styles.option]}>
-          <Text style={{ fontWeight: "bold", fontSize: 12 }}>Recargar</Text> 
-              <MaterialCommunityIcons
-                name="cash-plus"
-                size={45}
-                color="black"
-              />
-          </View>
-        )}
-           
-            </Pressable>
-            </Link>
-          </View>
-          <View style={{ alignItems: "center", justifyContent: "center" }}>
-          <Link href="/withdraw" asChild >
-          <Pressable > 
-          {({pressed}) => (
-          <View style={pressed? [{backgroundColor: 'lightgray'}, styles.option] : [{backgroundColor: 'white'}, styles.option]}>
-          <Text style={{ fontWeight: "bold", fontSize: 12 }}>Retirar</Text> 
-            <MaterialCommunityIcons
-                  name="cash-fast"
-                  size={45}
-                  color="black"
-                />
-          </View>
-        )}
-           
-            </Pressable>
-            </Link>
-            
-          </View>
-          <View style={{ alignItems: "center", justifyContent: "center" }}>
-          <Link href="/pay" asChild >
-          <Pressable > 
-          {({pressed}) => (
-          <View style={pressed? [{backgroundColor: 'lightgray'}, styles.option] : [{backgroundColor: 'white'}, styles.option]}>
-          <Text style={{ fontWeight: "bold", fontSize: 12 }}>Servicios</Text> 
-          <Ionicons name="receipt" size={35} color="black" style={{padding: 5}} />
-          </View>
-        )}
-           
-            </Pressable>
-            </Link>
-            
-          </View>
-          <View style={{ alignItems: "center", justifyContent: "center" }}>
-          <Link href="/transfer" asChild >
-          <Pressable > 
-          {({pressed}) => (
-          <View style={pressed? [{backgroundColor: 'lightgray'}, styles.option] : [{backgroundColor: 'white'}, styles.option]}>
-          <Text style={{ fontWeight: "bold", fontSize: 12 }}>Transferir</Text> 
-              <FontAwesome6
-                  name="money-bill-transfer"
-                  size={35}
-                  color="black"
-                  style={{padding: 5}}
-                />
-          </View>
-        )}
-           
-            </Pressable>
-            </Link>
-            
-          </View>
-          <View style={{ alignItems: "center", justifyContent: "center" }}>
-          <Link href="/add-money" asChild >
-          <Pressable > 
-          {({pressed}) => (
-          <View style={pressed? [{backgroundColor: 'lightgray'}, styles.option] : [{backgroundColor: 'white'}, styles.option]}>
-          <Text style={{ fontWeight: "bold", fontSize: 10 }}>CrediExpress</Text> 
-          <Fontisto name="wallet" size={35} color="black" style={{padding: 5}}/>
-          </View>
-        )}
-           
-            </Pressable>
-            </Link>
-            
-          </View>
-        </ScrollView>
+        <OptionsCarousel/>
+        
         <Text style={{position: 'relative', right: 63, fontSize: 20, fontWeight: '500', marginBottom: 5}}>Últimas transacciones</Text>
         <TransactionsList/>
         <Link
@@ -147,27 +59,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     //marginHorizontal: 10,
     //backgroundColor: 'pink',
-  },
-  optionsCarousel: {
-    paddingHorizontal: 10,
-    paddingBottom: 15,
-    paddingTop: 10
-  },
-  option: {
-    //backgroundColor: "white",
-    shadowColor: "#000000",
-    shadowOffset: {
-      width: 4,
-      height: 4,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 10,
-    borderRadius: 20,
-    margin: 5,
-    width: 80,
-    height: 90,
-    alignItems: "center",
-    justifyContent: "center",
   },
   optionsBar: {
     position: "absolute",

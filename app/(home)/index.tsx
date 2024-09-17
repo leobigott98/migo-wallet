@@ -16,6 +16,7 @@ import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import CardsCarousel from "../../components/CardsCarousel"; 
 import Card from "@/components/Card";
+import TransactionsList from "@/components/TransactionsList";
 
 export default function HomeScreen() {
 
@@ -111,131 +112,7 @@ export default function HomeScreen() {
           </View>
         </ScrollView>
         <Text style={{position: 'relative', right: 63, fontSize: 20, fontWeight: '500', marginBottom: 5}}>Últimas transacciones</Text>
-        <ScrollView style={styles.transactionsBox}>
-          <View style={styles.transaction}>
-            <View style={{ position: "relative", left: 20 }}>
-              <Ionicons name="person-circle-outline" size={54} color="black" />
-            </View>
-            <View style={{ position: "relative", left: 40, width: 140 }}>
-              <Text style={{ fontWeight: "bold", fontSize: 16, margin: 2 }}>
-                Leonardo Bigott
-              </Text>
-              <Text style={{ fontSize: 12, color: "grey", margin: 2 }}>
-                20 de agosto
-              </Text>
-              <Text style={{ fontSize: 12, margin: 2, position: "relative" }}>
-                Transferencia Recibida
-              </Text>
-            </View>
-            <View
-              style={{ position: "relative", left: 40, marginHorizontal: 20 }}
-            >
-              <Text
-                style={{
-                  fontWeight: "bold",
-                  fontSize: 16,
-                  margin: 2,
-                  color: "green",
-                }}
-              >
-                +$50
-              </Text>
-            </View>
-          </View>
-          <View style={styles.transaction}>
-            <View style={{ position: "relative", left: 20 }}>
-              <Ionicons name="person-circle-outline" size={54} color="black" />
-            </View>
-            <View style={{ position: "relative", left: 40, width: 140 }}>
-              <Text style={{ fontWeight: "bold", fontSize: 16, margin: 2 }}>
-                Leonardo Bigott
-              </Text>
-              <Text style={{ fontSize: 12, color: "grey", margin: 2 }}>
-                20 de agosto
-              </Text>
-              <Text style={{ fontSize: 12, margin: 2, position: "relative" }}>
-                Transferencia Enviada
-              </Text>
-            </View>
-            <View
-              style={{ position: "relative", left: 40, marginHorizontal: 20 }}
-            >
-              <Text
-                style={{
-                  fontWeight: "bold",
-                  fontSize: 16,
-                  margin: 2,
-                  color: "red",
-                }}
-              >
-                -$25
-              </Text>
-            </View>
-          </View>
-          <View style={styles.transaction}>
-            <View style={{ position: "relative", left: 20 }}>
-              <Ionicons name="person-circle-outline" size={54} color="black" />
-            </View>
-            <View style={{ position: "relative", left: 40, width: 140 }}>
-              <Text style={{ fontWeight: "bold", fontSize: 16, margin: 2 }}>
-                Pago Móvil
-              </Text>
-              <Text style={{ fontSize: 12, color: "grey", margin: 2 }}>
-                20 de agosto
-              </Text>
-              <Text style={{ fontSize: 12, margin: 2, position: "relative" }}>
-                Recarga Recibida
-              </Text>
-            </View>
-            <View
-              style={{ position: "relative", left: 40, marginHorizontal: 20 }}
-            >
-              <Text
-                style={{
-                  fontWeight: "bold",
-                  fontSize: 16,
-                  margin: 2,
-                  color: "green",
-                }}
-              >
-                +$100
-              </Text>
-            </View>
-          </View>
-          <View style={styles.transaction}>
-            <View style={{ position: "relative", left: 20 }}>
-              <Ionicons name="person-circle-outline" size={54} color="black" />
-            </View>
-            <View style={{ position: "relative", left: 40, width: 140 }}>
-              <Text style={{ fontWeight: "bold", fontSize: 16, margin: 2 }}>
-                Digitel
-              </Text>
-              <Text style={{ fontSize: 12, color: "grey", margin: 2 }}>
-                20 de agosto
-              </Text>
-              <Text style={{ fontSize: 12, margin: 2, position: "relative" }}>
-                Pago Realizado
-              </Text>
-            </View>
-            <View
-              style={{ position: "relative", left: 40, marginHorizontal: 20 }}
-            >
-              <Text
-                style={{
-                  fontWeight: "bold",
-                  fontSize: 16,
-                  margin: 2,
-                  color: "red",
-                }}
-              >
-                -$25
-              </Text>
-            </View>
-          </View>
-          <View style={styles.transaction}>
-            <Text>Ver Todas</Text>
-          </View>
-        </ScrollView>
+        <TransactionsList/>
         <Link
           href={{
             pathname: "/wallet-info/[id]",
@@ -291,23 +168,6 @@ const styles = StyleSheet.create({
     height: 90,
     alignItems: "center",
     justifyContent: "center",
-  },
-  transactionsBox: {
-    marginHorizontal: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    height: 297,
-    marginVertical: 5,
-  },
-  transaction: {
-    display: "flex",
-    flexDirection: "row",
-    width: 320,
-    height: 95,
-    //borderBottomColor: "lightgray",
-    //borderBottomWidth: 1,
-    alignItems: "center",
-    //justifyContent: 'center'
   },
   optionsBar: {
     position: "absolute",

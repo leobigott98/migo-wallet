@@ -64,6 +64,16 @@ export default function HomeLayout() {
         options={{
           headerShown: true
         }} />
+        <Stack.Screen 
+        name="transaction/[id]"
+        options={({ route }) => ({
+          headerShown: true,
+          title: 'Transacción',
+          // @ts-ignore: Unreachable code error
+          headerTitle: `Transacción ${route.params && route.params.id ? route.params.id : '' }`
+          
+        })   
+        } />
     </Stack>
   );
 }

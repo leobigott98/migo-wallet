@@ -5,98 +5,10 @@ import TransactionCard from "./TransactionCard";
 export default function TransactionsList(){
     return(
         <ScrollView style={styles.transactionsBox}>
-        <TransactionCard/>
-          
-          <View style={styles.transaction}>
-            <View style={{ position: "relative", left: 20 }}>
-              <Ionicons name="person-circle-outline" size={54} color="black" />
-            </View>
-            <View style={{ position: "relative", left: 40, width: 140 }}>
-              <Text style={{ fontWeight: "bold", fontSize: 16, margin: 2 }}>
-                Leonardo Bigott
-              </Text>
-              <Text style={{ fontSize: 12, color: "grey", margin: 2 }}>
-                20 de agosto
-              </Text>
-              <Text style={{ fontSize: 12, margin: 2, position: "relative" }}>
-                Transferencia Enviada
-              </Text>
-            </View>
-            <View
-              style={{ position: "relative", left: 40, marginHorizontal: 20 }}
-            >
-              <Text
-                style={{
-                  fontWeight: "bold",
-                  fontSize: 16,
-                  margin: 2,
-                  color: "red",
-                }}
-              >
-                -$25
-              </Text>
-            </View>
-          </View>
-          <View style={styles.transaction}>
-            <View style={{ position: "relative", left: 20 }}>
-              <Ionicons name="person-circle-outline" size={54} color="black" />
-            </View>
-            <View style={{ position: "relative", left: 40, width: 140 }}>
-              <Text style={{ fontWeight: "bold", fontSize: 16, margin: 2 }}>
-                Pago Móvil
-              </Text>
-              <Text style={{ fontSize: 12, color: "grey", margin: 2 }}>
-                20 de agosto
-              </Text>
-              <Text style={{ fontSize: 12, margin: 2, position: "relative" }}>
-                Recarga Recibida
-              </Text>
-            </View>
-            <View
-              style={{ position: "relative", left: 40, marginHorizontal: 20 }}
-            >
-              <Text
-                style={{
-                  fontWeight: "bold",
-                  fontSize: 16,
-                  margin: 2,
-                  color: "green",
-                }}
-              >
-                +$100
-              </Text>
-            </View>
-          </View>
-          <View style={styles.transaction}>
-            <View style={{ position: "relative", left: 20 }}>
-              <Ionicons name="person-circle-outline" size={54} color="black" />
-            </View>
-            <View style={{ position: "relative", left: 40, width: 140 }}>
-              <Text style={{ fontWeight: "bold", fontSize: 16, margin: 2 }}>
-                Digitel
-              </Text>
-              <Text style={{ fontSize: 12, color: "grey", margin: 2 }}>
-                20 de agosto
-              </Text>
-              <Text style={{ fontSize: 12, margin: 2, position: "relative" }}>
-                Pago Realizado
-              </Text>
-            </View>
-            <View
-              style={{ position: "relative", left: 40, marginHorizontal: 20 }}
-            >
-              <Text
-                style={{
-                  fontWeight: "bold",
-                  fontSize: 16,
-                  margin: 2,
-                  color: "red",
-                }}
-              >
-                -$25
-              </Text>
-            </View>
-          </View>
+        <TransactionCard id='123' transactionDate={new Date("2024-08-20T00:00:00.000-04:00")} transactionName="Leonardo Bigott" amount={50} icon={<Ionicons name="person-circle-outline" size={54} color="black" />} transactionType="Transferencia Recibida" /> 
+        <TransactionCard id="456" transactionDate={new Date("2024-08-19T00:00:00.000-04:00")} transactionName="Leonardo Bigott" amount={-25} icon={<Ionicons name="person-circle-outline" size={54} color="black" />} transactionType="Transferencia Enviada" />
+        <TransactionCard id="789" transactionDate={new Date("2024-08-18T00:00:00.000-04:00")} transactionName="Pago Móvil" amount={100} icon={<Ionicons name="person-circle-outline" size={54} color="black" />} transactionType="Recarga Recibida" />
+        <TransactionCard id="012" transactionDate={new Date("2024-08-17T00:00:00.000-04:00")} transactionName="Digitel" amount={-25} icon={<Ionicons name="person-circle-outline" size={54} color="black" />} transactionType="Pago Realizado" />
           <View style={styles.transaction}>
             <Text>Ver Todas</Text>
           </View>

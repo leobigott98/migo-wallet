@@ -5,6 +5,7 @@ export default function AddMoneyLayout() {
     <Stack
       screenOptions={{
         headerShown: false,
+        headerTitle: 'Recargar',
         headerTitleStyle: {
           fontWeight: 'bold',
         },
@@ -13,17 +14,18 @@ export default function AddMoneyLayout() {
       <Stack.Screen name="add-international-card"
       options={{
         headerShown: true,
+        headerTitle: 'Agregar Tarjeta Internacional',
         title: 'Agregar Tarjeta Internacional',
-        animation: 'slide_from_bottom',
-        animationTypeForReplace: 'push',
-        animationDuration: 350,
+        presentation: 'modal',
         
       }} />
       <Stack.Screen 
         name="add-national-card" 
         options={{
           headerShown: true,
-          title: 'Agregar Tarjeta Nacional'
+          title: 'Agregar Tarjeta Nacional',
+          headerTitle: 'Agregar Tarjeta Nacional',
+          presentation: 'modal',
         }} />
       <Stack.Screen 
         name="international-card" 
@@ -41,13 +43,17 @@ export default function AddMoneyLayout() {
         name="pago-movil-c2p"
         options={{
           headerShown: true,
-          title: 'Recarga con Pago Móvil C2P'
+          title: 'Recarga con Pago Móvil C2P',
+          headerTitle: 'Pago Móvil C2P',
+          presentation: 'modal',
         }} />
       <Stack.Screen 
         name="pago-movil-p2c"
         options={{
           headerShown: true,
-          title: 'Recarga con Pago Móvil P2C'
+          title: 'Recarga con Pago Móvil P2C',
+          headerTitle: 'Pago Móvil P2C',
+          presentation: 'modal'
         }} />
     </Stack>
   );

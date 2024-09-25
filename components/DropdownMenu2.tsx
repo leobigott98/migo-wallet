@@ -7,7 +7,7 @@ import {
     Pressable,
   } from "react-native";
 
-  export default function DropdownMenu ( props: { name: string, children?: ReactNode[] | ReactNode, height?: number} ){
+  export default function DropdownMenu2 ( props: { name: string, children?: ReactNode[] | ReactNode, height?: number} ){
     const [isOpen, setIsOpen] = useState(false)
     const height = useSharedValue(60);
     const opacity = useSharedValue(0);
@@ -16,7 +16,7 @@ import {
     const animatedStyles = useAnimatedStyle(()=>{
       if(isOpen){
           return {
-          height: withTiming(height.value + height.value * nChildren)
+          height: withTiming(height.value + 200 * nChildren)
         }
       } else return { 
         height: withTiming(height.value)

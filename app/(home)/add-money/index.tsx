@@ -5,14 +5,17 @@ import {
     ScrollView,
     StatusBar,
     SafeAreaView,
-    Dimensions, 
-    Pressable
+    Dimensions,
   } from "react-native";
-  import DropdownMenu from "@/components/DropdownMenu";
+import OptionsBox from "@/components/OptionsBox";
+import DropdownMenu from "@/components/DropdownMenu";
+import DropdownMenu2 from "@/components/DropdownMenu2"
 import DropdownOption from "@/components/DropdownOption";
+import DropdownZelleInfo from "@/components/DropdownZelleInfo";
+import Ionicons from '@expo/vector-icons/Ionicons';
   
   export default function AddMoneyScreen() {
-  
+
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollView}>
@@ -23,21 +26,21 @@ import DropdownOption from "@/components/DropdownOption";
               <Text style={{fontSize: 24}}>,00</Text>
             </View>
           </View>
-          <ScrollView contentContainerStyle={styles.rechargeOptionsBox}>
-            <Text style={{fontWeight: '500'}}>Opciones de Recarga</Text>
-            <DropdownMenu name='Tarjeta de Crédito/Débito Nacional'>
-              <DropdownOption name="Agregar Tarjeta" redirect="/(home)/add-money/add-national-card"/>
+          <OptionsBox title="Opciones de Recarga">
+            <DropdownMenu name='Tarjeta de Crédito/Débito Nacional' >
+                <DropdownOption name="Agregar Tarjeta" href="/(home)/add-money/add-national-card" buttonColor="#90E0EF" pressedButtonColor="#00B4D8" icon={<Ionicons name="add-circle-outline" size={24} color="black" style={{position: 'relative', right: '100%'}} />}/>
             </DropdownMenu>
-            <DropdownMenu name='Tarjeta Internacional'>
-              <DropdownOption name="Agregar Tarjeta" redirect="/(home)/add-money/add-national-card"/>
-            </DropdownMenu>
-            <DropdownMenu name='Pago Móvil'>
-              <DropdownOption name="Agregar Tarjeta" redirect="/(home)/add-money/add-national-card"/>
-            </DropdownMenu>
-            <DropdownMenu name='Zelle'>
-              <DropdownOption name="Agregar Tarjeta" redirect="/(home)/add-money/add-national-card"/>
-            </DropdownMenu>
-          </ScrollView>
+              <DropdownMenu name='Tarjeta Internacional' >
+                <DropdownOption name="Agregar Tarjeta" href="/(home)/add-money/add-international-card" buttonColor="#90E0EF" pressedButtonColor="#00B4D8" icon={<Ionicons name="add-circle-outline" size={24} color="black" style={{position: 'relative', right: '100%'}} />}/>
+              </DropdownMenu>
+              <DropdownMenu name='Pago Móvil' >
+                <DropdownOption name="Pago Móvil C2P" description='Clave dinámica' styling={{flexDirection: 'column'}} href="/(home)/add-money/pago-movil-c2p" buttonColor="#00B4D8" pressedButtonColor="#048EA9" />
+                <DropdownOption name="Pago Móvil P2C" description='Tradicional' styling={{flexDirection: 'column'}} href="/(home)/add-money/pago-movil-p2c" buttonColor="#00B4D8" pressedButtonColor="#048EA9" />
+              </DropdownMenu>
+              <DropdownMenu2 name='Zelle' >
+                <DropdownZelleInfo/>
+              </DropdownMenu2>
+          </OptionsBox> 
         </ScrollView>
       </SafeAreaView>
     );

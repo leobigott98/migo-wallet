@@ -1,4 +1,3 @@
-//import { useState } from "react";
 import { Href, Link } from "expo-router";
 import {
     View,
@@ -6,18 +5,23 @@ import {
     StyleSheet,
     Pressable
   } from "react-native";
-  import Ionicons from '@expo/vector-icons/Ionicons';
 
-  export default function DropdownOption ( props: {redirect?: Href, name: string} ){
-    //const [timesPressed, setTimesPressed] = useState(0)
+
+  export default function DropdownOption ( props: {href: Href, name: string, buttonColor: string, pressedButtonColor: string, icon?: React.ReactNode, description?: string, styling?: object} ){
 
     return(
-      <View style={styles.dropdownOption}>
-        <Link style={{alignItems: 'center', justifyContent: 'center', display: 'flex', flexDirection: 'row' }} href={props.redirect? props.redirect : '/'}>
-            <Ionicons name="add-circle-outline" size={24} color="black" style={{position: 'relative', right: '100%'}} />
+      <View style={{ alignItems: "center", justifyContent: "center" }}>
+        <Link href={props.href} asChild >
+          <Pressable > 
+          {({pressed}) => (
+          <View style={[pressed? {backgroundColor: props.pressedButtonColor} : {backgroundColor: props.buttonColor}, styles.dropdownOption, props.styling]}>
+            {props.icon}
             <Text style={{color: 'white', fontSize: 14, fontWeight: 'bold'}}>{props.name}</Text>
-        </Link>
-
+            <Text style={{color: 'white', fontSize: 8, fontWeight: 'bold'}}>{props.description}</Text>
+          </View>
+        )}
+            </Pressable>
+            </Link>
       </View>
         
     )
@@ -25,17 +29,16 @@ import {
 
   const styles = StyleSheet.create({
     dropdownOption: {
-      backgroundColor: '#90E0EF',
+      display: 'flex',
+      flexDirection: 'row',
+      //backgroundColor: '#90E0EF',
       borderRadius: 10,
       marginTop: 10,
       alignItems: 'center', 
       justifyContent: 'center', 
-      //padding: 20,
-      
-      width: '100%',
-      height: 40,
-      
-      
+      width: 250,
+      height: 40,  
+      padding: 5    
     }
   });
   

@@ -16,12 +16,6 @@ export default function HomeLayout() {
             <Ionicons name="person-circle" size={28} color="black" style={{margin: 10}}/>
           </View> 
         ),
-        headerLeft: ()=>(
-          <Image
-            source={require('@/assets/images/logo_migo.png')}
-            style={{width: 40, height: 40, resizeMode: 'contain', position: 'relative', }}
-          />
-        ),
         headerTitle: 'MiGo Wallet',
         headerTitleAlign: 'left',
         //headerTintColor: '#fff',
@@ -32,13 +26,19 @@ export default function HomeLayout() {
       >
       <Stack.Screen name="index"
       options={{
-        title: 'Home'
+        title: 'Home',
+        headerLeft: ()=>(
+          <Image
+            source={require('@/assets/images/logo_migo.png')}
+            style={{width: 40, height: 40, resizeMode: 'contain', position: 'relative', }}
+          />
+        ),
       }} />
       <Stack.Screen 
         name="add-money" 
         options={{
           headerShown: true,
-          title: 'Recargar'
+          title: 'Recargar',
         }} />
       <Stack.Screen 
         name="withdraw" 

@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     optionsCarousel: {
       paddingHorizontal: 10,
       paddingBottom: 15,
-      paddingTop: 10
+      paddingTop: 10,
     },
     option: {
       //backgroundColor: "white",

@@ -38,7 +38,7 @@ import {
     return(
       <Animated.View style={[animatedStyles, styles.rechargeOption]}>
           <Pressable style={{display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center', height: 60, position: 'relative', top: 0}} onPress={()=>{setIsOpen((value) => !value) }}>
-              <Text style={{color: 'white', fontSize: 12, fontWeight: 'bold'}}>{props.name}</Text>
+              <Text style={{color: 'black', fontSize: 12, fontWeight: 'bold'}}>{props.name}</Text>
           </Pressable>
             <Animated.View style={animatedDisplay}>
               {props.children}
@@ -50,8 +50,11 @@ import {
 
   const styles = StyleSheet.create({
     rechargeOption: {
-      backgroundColor: '#0077B6',
-      borderRadius: 10,
+      //backgroundColor: '#0077B6',
+      backgroundColor: 'white',
+      borderColor: 'lightgray',
+      borderWidth: 1,
+      borderRadius: 20,
       marginTop: 10,
       alignItems: 'center',
       //padding: 10

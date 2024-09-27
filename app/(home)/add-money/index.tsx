@@ -28,10 +28,10 @@ import Ionicons from '@expo/vector-icons/Ionicons';
           </View>
           <OptionsBox title="Opciones de Recarga">
             <DropdownMenu name='Tarjeta de Crédito/Débito Nacional' >
-                <DropdownOption name="Agregar Tarjeta" href="/(home)/add-money/add-national-card" buttonColor="#90E0EF" pressedButtonColor="#00B4D8" icon={<Ionicons name="add-circle-outline" size={24} color="black" style={{position: 'relative', right: '100%'}} />}/>
+                <DropdownOption name="Agregar Tarjeta" href="/(home)/add-money/add-card" buttonColor="#90E0EF" pressedButtonColor="#00B4D8" icon={<Ionicons name="add-circle-outline" size={24} color="black" style={{position: 'relative', right: '100%'}} />}/>
             </DropdownMenu>
               <DropdownMenu name='Tarjeta Internacional' >
-                <DropdownOption name="Agregar Tarjeta" href="/(home)/add-money/add-international-card" buttonColor="#90E0EF" pressedButtonColor="#00B4D8" icon={<Ionicons name="add-circle-outline" size={24} color="black" style={{position: 'relative', right: '100%'}} />}/>
+                <DropdownOption name="Agregar Tarjeta" href="/(home)/add-money/add-card" buttonColor="#90E0EF" pressedButtonColor="#00B4D8" icon={<Ionicons name="add-circle-outline" size={24} color="black" style={{position: 'relative', right: '100%'}} />}/>
               </DropdownMenu>
               <DropdownMenu name='Pago Móvil' >
                 <DropdownOption name="Pago Móvil C2P" description='Clave dinámica' styling={{flexDirection: 'column'}} href="/(home)/add-money/pago-movil-c2p" buttonColor="#00B4D8" pressedButtonColor="#048EA9" />

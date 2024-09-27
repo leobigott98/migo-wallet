@@ -6,12 +6,12 @@ import {
     SafeAreaView,
   } from "react-native";
   
-  export default function AddInternationalCardScreen() {
+  export default function AddCardScreen() {
   
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollView}>
-          <Text>Add International Card</Text>
+          <Text>Add Card</Text>
         </ScrollView>
       </SafeAreaView>
     );

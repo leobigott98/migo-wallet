@@ -15,6 +15,7 @@ export default function PayLayout() {
         options={{
           headerShown: true,
           title: 'Pagar Digitel',
+          presentation: 'modal'
         }} />
       <Stack.Screen 
         name="movistar" 

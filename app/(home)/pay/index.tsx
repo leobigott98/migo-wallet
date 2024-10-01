@@ -25,7 +25,7 @@ import {
           <ScrollView contentContainerStyle={styles.rechargeOptionsBox}>
             <Text style={{fontWeight: '500'}}>Opciones de Pago:</Text>
             <View style={styles.imageContainer}>
-              <Link href="/digitel">
+              <Link href="/(home)/pay/digitel">
                 <Image source={require('@/assets/images/logos/digitel-logo.png')} style={styles.optionImage}/>
               </Link>
             </View>

@@ -8,7 +8,7 @@ import {
   Dimensions, 
   Pressable
 } from "react-native";
-import DropdownMenu from "@/components/DropdownMenu";
+import { Link } from "expo-router";
 
 export default function WithdrawScreen() {
 
@@ -24,7 +24,20 @@ export default function WithdrawScreen() {
         </View>
         <ScrollView contentContainerStyle={styles.rechargeOptionsBox}>
           <Text style={{fontWeight: '500'}}>Opciones de Retiro</Text>
-          <DropdownMenu name='Pago Móvil' type='pago-movil' redirect="/"/>
+          <View style={{ alignItems: "center", justifyContent: "center" }}>
+            <View style={{ alignItems: "center", justifyContent: "center" }}>
+              <Link href="/(home)/withdraw/pago-movil" asChild >
+                <Pressable > 
+                  {({pressed}) => (
+                    <View style={[pressed? {backgroundColor: 'lightgray'} : {backgroundColor: 'white'}, styles.dropdownOption]}>
+                      <Text style={{color: 'black', fontSize: 14, fontWeight: 'bold'}}>Pago Móvil</Text>
+                    </View>
+                  )}
+                </Pressable>
+              </Link>
+            </View>
+        
+      </View>
         </ScrollView>
       </ScrollView>
     </SafeAreaView>
@@ -70,10 +83,26 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   rechargeOption: {
-    backgroundColor: '#0077B6',
-    borderRadius: 10,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    borderColor: 'lightgray',
+    borderWidth: 1,
     marginTop: 10,
     alignItems: 'center',
-    justifyContent: 'center'
+  },
+  dropdownOption: {
+    display: 'flex',
+    //backgroundColor: 'white',
+    borderRadius: 20,
+    borderColor: 'lightgray',
+    borderWidth: 1,
+    //backgroundColor: '#90E0EF',
+    marginTop: 10,
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    height: 40,  
+    padding: 5,
+    position: 'relative', 
+    top: 0   
   }
 });

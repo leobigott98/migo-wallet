@@ -9,13 +9,23 @@ import {
   Pressable,
   Dimensions
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import {useEffect, useState} from 'react'
 import { Dropdown } from "react-native-element-dropdown";
+import {Calendar, DateData} from 'react-native-calendars';
+import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming} from "react-native-reanimated";
 
 export default function PagoMovilP2CScreen() {
   const [BsAmount, setBsAmount] = useState('');
   const [DollarsAmount, setDollarsAmount] = useState(0.00);
+  const [selected, setSelected] = useState('');
+  const [bank, setBank] = useState('0');
+  const [documentType, setDocumentType] = useState('0');
+  const [phonePrefix, setPhonePrefix] = useState('0');
+  const [isBankFocus, setIsBankFocus] = useState(false);
+  const [isDocumentTypeFocus, setIsDocumentTypeFocus] = useState(false);
+  const [isPhonePrefixFocus, setIsPhonePrefixFocus] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
+  const height = useSharedValue(30);
   const Bs2Dollars = 36.82;
   const documetTypes = [
     {label: 'V', value: '1'},
@@ -36,12 +46,6 @@ export default function PagoMovilP2CScreen() {
     {label: '0416', value: '4'},
     {label: '0426', value: '5'},
   ]
-  const [bank, setBank] = useState('0');
-  const [documentType, setDocumentType] = useState('0');
-  const [phonePrefix, setPhonePrefix] = useState('0');
-  const [isBankFocus, setIsBankFocus] = useState(false);
-  const [isDocumentTypeFocus, setIsDocumentTypeFocus] = useState(false);
-  const [isPhonePrefixFocus, setIsPhonePrefixFocus] = useState(false);
 
   const calculateDollars = ()=>{
     setDollarsAmount(Number.parseFloat(BsAmount) / Bs2Dollars);
@@ -51,6 +55,15 @@ export default function PagoMovilP2CScreen() {
     calculateDollars()
   }), [BsAmount])
 
+  const animatedStyles = useAnimatedStyle(()=>{
+    if(isOpen){
+        return {
+        height: withTiming(height.value + 350)
+      }
+    } else return { 
+      height: withTiming(height.value)
+    }
+  })
 
   return (
     <SafeAreaView style={styles.container}>
@@ -155,14 +168,37 @@ export default function PagoMovilP2CScreen() {
             <TextInput style={styles.input} placeholder="Número de Referencia" placeholderTextColor='gray' inputMode="numeric"/>
           </View>
           <View>
-            {/* <Text style={styles.inputLabel} >Clave de Pago (OTP)</Text> */}
-            <TextInput style={styles.input} placeholder="Fecha del Pago" placeholderTextColor='gray' inputMode="numeric"/>
-          </View>
-          <View>
             <Text style={[styles.inputLabel, {marginVertical: 5}]} >Monto (Bs)</Text>
             <TextInput style={[{fontSize: 24}, styles.input, {marginVertical: 5}]} placeholder="0.00" placeholderTextColor='gray' value={BsAmount} onChangeText={setBsAmount} inputMode="decimal" />
             <Text style={{paddingLeft: 10, marginLeft: 'auto', marginRight: 12}}>Ref {BsAmount === ''? '0.00' : DollarsAmount.toPrecision(3)}</Text>
           </View>
+          <View>
+          <Text style={[styles.inputLabel, {marginVertical: 5}]} >Fecha del Pago</Text>
+          <Animated.View style={[animatedStyles, styles.datePicker]}>
+            <Pressable style={{display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center', height: 30, position: 'relative', top: 0}} onPress={()=>{setIsOpen((value) => !value) }}>
+                <Text style={selected? {color: 'black', fontWeight: 'bold'} : {color: 'gray'}}>{selected? new Date(selected).toLocaleDateString() : 'Elija una fecha'}</Text>
+            </Pressable>
+             {isOpen? 
+              <Calendar
+                onDayPress={(day:DateData) => {
+                  setSelected(day.dateString);
+                }}
+               theme={{
+                textMonthFontFamily: 'monospace',
+                textMonthFontSize: 20,
+               }}
+                enableSwipeMonths={true}
+                maxDate={new Date().toDateString()}
+                markedDates={{
+                  [selected]: {selected: true, disableTouchEvent: true, selectedDotColor: 'orange'}
+                }}
+              /> : <></>}
+          </Animated.View>
+            {/* <Text style={styles.inputLabel} >Clave de Pago (OTP)</Text> */}
+            {/* <TextInput style={styles.input} placeholder="Fecha del Pago" placeholderTextColor='gray' inputMode="numeric"/> */}
+            
+          </View>
+          
           {/* <View >
             <Text style={styles.inputLabel} >Ref</Text>
             <Text style={[styles.input, {fontSize: 18, justifyContent: 'center'}]}>{DollarsAmount.toPrecision(3)}</Text>
@@ -170,8 +206,7 @@ export default function PagoMovilP2CScreen() {
         </View>
         
         {/* </LinearGradient> */}
-      </ScrollView>
-      <View style={{position: 'relative', marginTop: 'auto'}}>
+        <View style={{position: 'relative', marginTop: 'auto'}}>
           <Pressable > 
               {({pressed}) => (
                 <View style={[pressed? {backgroundColor: '#048EA9'} : {backgroundColor: '#00B4D8'}, styles.rechargeButton]}>
@@ -187,6 +222,8 @@ export default function PagoMovilP2CScreen() {
             )}
           </Pressable>
         </View>
+      </ScrollView>
+      
       
     </SafeAreaView>
   );
@@ -284,5 +321,16 @@ const styles = StyleSheet.create({
     height: 50,  
     padding: 5,
     margin: 5    
+  },
+  datePicker: {
+    //backgroundColor: '#0077B6', #03045E
+    //backgroundColor: 'white',
+    borderRadius: 20,
+    borderColor: 'lightgray',
+    borderWidth: 1,
+    //marginTop: 10,
+    //alignItems: 'center',
+    //padding: 10
+    
   }
 });

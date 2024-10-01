@@ -50,7 +50,7 @@ import {
 
   const styles = StyleSheet.create({
     rechargeOption: {
-      //backgroundColor: '#0077B6',
+      //backgroundColor: '#0077B6', #03045E
       backgroundColor: 'white',
       borderRadius: 20,
       borderColor: 'lightgray',

@@ -20,8 +20,10 @@ import OptionsCarousel from "@/components/OptionsCarousel";
     const [nroContrato, setNroContrato] = useState('')
     const [phonePrefix, setPhonePrefix] = useState('0');
     const products=[
-      {value: '1', label: 'Prepago'},
-      {value: '2', label: 'Pospago'}
+      {value: '1', label: 'Móvil Prepago'},
+      {value: '2', label: 'Móvil Pospago'},
+      {value: '3', label: 'Fija'},
+      {value: '4', label: 'Internet'}
     ]
     const phonePrefixes = [
       {label: '0414', value: '1'},
@@ -36,7 +38,7 @@ import OptionsCarousel from "@/components/OptionsCarousel";
         <ScrollView contentContainerStyle={styles.scrollView}>
         <Text>Producto</Text>
         <Dropdown
-              style={[styles.dropdown, {width: 100,}, isProductFocused && { borderColor: 'blue' }]}
+              style={[styles.dropdown, {width: 200,}, isProductFocused && { borderColor: 'blue' }]}
               placeholderStyle={styles.placeholderStyle}
               selectedTextStyle={styles.selectedTextStyle}
               inputSearchStyle={styles.inputSearchStyle}
@@ -84,7 +86,7 @@ import OptionsCarousel from "@/components/OptionsCarousel";
             <TextInput style={[{flex: 1}, styles.input]} placeholder="Número de Teléfono" placeholderTextColor='gray' inputMode="numeric"/> 
             <OptionsCarousel/>
           </View>
-          ) : 
+          ) : product === '2' ?
           (<View>
             <Text>Opciones de Pospago</Text>
             <TextInput style={[{flex: 1}, styles.input]} placeholder="Número de Contrato" placeholderTextColor='gray' inputMode="numeric"/>
@@ -95,7 +97,7 @@ import OptionsCarousel from "@/components/OptionsCarousel";
                 </View>
             )}
           </Pressable>
-          </View>)
+          </View>) : <></>
         }
 
         

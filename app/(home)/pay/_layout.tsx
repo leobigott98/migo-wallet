@@ -21,31 +21,36 @@ export default function PayLayout() {
         name="movistar" 
         options={{
           headerShown: true,
-          title: 'Pagar Movistar'
+          title: 'Pagar Movistar',
+          presentation: 'modal'
         }} />
       <Stack.Screen 
         name="movilnet" 
         options={{
           headerShown: true,
-          title: 'Pagar Movilnet'
+          title: 'Pagar Movilnet',
+          presentation: 'modal'
         }}/>
       <Stack.Screen 
         name="simpletv"
         options={{
           headerShown: true,
-          title: 'Pagar SimpleTV'
+          title: 'Pagar SimpleTV',
+          presentation: 'modal'
         }} />
       <Stack.Screen 
         name="inter"
         options={{
           headerShown: true,
-          title: 'Pagar Inter'
+          title: 'Pagar Inter',
+          presentation: 'modal'
         }} />
       <Stack.Screen 
         name="cantv"
         options={{
           headerShown: true,
-          title: 'Pagar Cantv'
+          title: 'Pagar Cantv',
+          presentation: 'modal'
         }} />
     </Stack>
   );

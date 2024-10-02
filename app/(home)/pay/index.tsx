@@ -9,6 +9,8 @@ import {
     Dimensions, 
     Image
   } from "react-native";
+import OptionsBox from "@/components/OptionsBox";
+import OptionButton from "@/components/OptionButton";
   
   export default function PayScreen() {
   
@@ -22,31 +24,26 @@ import {
               <Text style={{fontSize: 24}}>,00</Text>
             </View>
           </View>
-          <ScrollView contentContainerStyle={styles.rechargeOptionsBox}>
-            <Text style={{fontWeight: '500'}}>Opciones de Pago:</Text>
-            <View style={styles.imageContainer}>
-              <Link href="/(home)/pay/digitel">
-                <Image source={require('@/assets/images/logos/digitel-logo.png')} style={styles.optionImage}/>
-              </Link>
-            </View>
-            <View style={styles.imageContainer}>
-              <Link href="/movistar">
-                <Image source={require('@/assets/images/logos/movistar-logo.png')} style={styles.optionImage}/>
-              </Link>
-            </View>
-            <View style={styles.imageContainer}>
+          <OptionsBox title='Opciones de Pago:' >
+            <OptionButton buttonColor="white" href="/(home)/pay/digitel" pressedButtonColor="lightgray">
+              <Image source={require('@/assets/images/logos/digitel-logo.png')} style={styles.optionImage}/>
+            </OptionButton>
+            <OptionButton href="/(home)/pay/movistar" buttonColor="white" pressedButtonColor="lightgray">
+              <Image source={require('@/assets/images/logos/movistar-logo.png')} style={styles.optionImage}/>
+            </OptionButton>
+            <OptionButton href="/(home)/pay/movilnet" buttonColor="white" pressedButtonColor="lightgray">
               <Image source={require('@/assets/images/logos/movilnet-logo.png')} style={styles.optionImage}/>
-            </View>
-            <View style={styles.imageContainer}>
+            </OptionButton>
+            <OptionButton href="/(home)/pay/simpletv" buttonColor="white" pressedButtonColor="lightgray">
               <Image source={require('@/assets/images/logos/simpletv-logo.png')} style={styles.optionImage}/>
-            </View>
-            <View style={styles.imageContainer}>
+            </OptionButton>
+            <OptionButton href="/(home)/pay/inter" buttonColor="white" pressedButtonColor="lightgray">
               <Image source={require('@/assets/images/logos/inter-logo.png')} style={styles.optionImage}/>
-            </View>
-            <View style={styles.imageContainer}>
+            </OptionButton>
+            <OptionButton href="/(home)/pay/cantv" buttonColor="white" pressedButtonColor="lightgray">
               <Image source={require('@/assets/images/logos/cantv-logo.png')} style={styles.optionImage}/>
-            </View>
-          </ScrollView>
+            </OptionButton>
+          </OptionsBox>
         </ScrollView>
       </SafeAreaView>
     );
@@ -100,8 +97,8 @@ import {
       justifyContent: 'center'
     },
     optionImage:{
-      width: 50,
-      height: 50,
+      width: 60,
+      height: 60,
       resizeMode: 'contain'
     }, 
     imageContainer:{

@@ -1,5 +1,6 @@
 import { View, Pressable, Text, StyleSheet } from "react-native";
 import { Link, Href } from "expo-router";
+import { Dispatch, SetStateAction, useState } from "react";
 
 type Style = {
     padding: string
@@ -11,26 +12,42 @@ type Style = {
 } */
 
 type Props = {
-    name: string,
+    name?: string,
     icon: React.ReactNode,
-    href: Href,
-    nameFontSize?: number
+    href?: Href,
+    nameFontSize?: number,
+    setValue?: Dispatch<SetStateAction<string>>,
+    value?: string
 }
 
-export default function OptionCard({name, icon, href, nameFontSize = 12}: Props) {
+export default function OptionCard({name, icon, href, nameFontSize = 12, setValue, value}: Props) {
+  const [disabled, setDisabled] = useState(false);
+
     return(
         <View style={{ alignItems: "center", justifyContent: "center" }}>
-          <Link href={href} asChild >
-          <Pressable > 
-          {({pressed}) => (
-          <View style={pressed? [{backgroundColor: 'lightgray'}, styles.option] : [{backgroundColor: 'white'}, styles.option]}>
-          <Text style={{ fontWeight: "bold", fontSize: nameFontSize }}>{name}</Text> 
-              {icon}
-          </View>
-        )}
-           
-            </Pressable>
+          {href? 
+            <Link href={href} asChild >
+              <Pressable > 
+              {({pressed}) => (
+              <View style={pressed? [{backgroundColor: 'lightgray'}, styles.option] : [{backgroundColor: 'white'}, styles.option]}>
+              <Text style={{ fontWeight: "bold", fontSize: nameFontSize }}>{name}</Text> 
+                  {icon}
+              </View>
+              )}
+              </Pressable>
             </Link>
+          : setValue && value ?
+            <Pressable onPress={()=> setValue(value)} disabled={disabled}> 
+                {({pressed}) => {
+                  pressed? setDisabled(true) : setDisabled(false)
+                  return(
+                  <View style={pressed? [{backgroundColor: 'lightgray'}, styles.option] : [{backgroundColor: 'white'}, styles.option]}>
+                    {icon}
+                  </View>
+                )}}
+            </Pressable>
+          : <></>
+          }
           </View>
     )
 }

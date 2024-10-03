@@ -14,7 +14,7 @@ export default function PayLayout() {
         name="digitel"
         options={{
           headerShown: true,
-          title: 'Pagar Digitel',
+          title: 'Recarga Digitel',
           presentation: 'modal'
         }} />
       <Stack.Screen 

@@ -1,6 +1,6 @@
 import { View, Pressable, Text, StyleSheet } from "react-native";
 import { Link, Href } from "expo-router";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState, useEffect } from "react";
 
 type Style = {
     padding: string
@@ -17,11 +17,21 @@ type Props = {
     href?: Href,
     nameFontSize?: number,
     setValue?: Dispatch<SetStateAction<string>>,
-    value?: string
+    value?: string,
+    buttonPressed?: boolean[],
+    setButtonPressed?: Dispatch<SetStateAction<boolean[]>>,
+    index?: number
 }
 
-export default function OptionCard({name, icon, href, nameFontSize = 12, setValue, value}: Props) {
-  const [disabled, setDisabled] = useState(false);
+export default function OptionCard({name, icon, href, nameFontSize = 12, setValue, value, index}: Props) {
+  const [isPressed, setIsPressed] = useState(false);
+  /* useEffect(()=>{
+    if(setButtonPressed){
+      setButtonPressed(buttonPressed)
+    }
+    
+
+  },[isPressed]) */
 
     return(
         <View style={{ alignItems: "center", justifyContent: "center" }}>
@@ -37,14 +47,18 @@ export default function OptionCard({name, icon, href, nameFontSize = 12, setValu
               </Pressable>
             </Link>
           : setValue && value ?
-            <Pressable onPress={()=> setValue(value)} disabled={disabled}> 
-                {({pressed}) => {
-                  pressed? setDisabled(true) : setDisabled(false)
-                  return(
-                  <View style={pressed? [{backgroundColor: 'lightgray'}, styles.option] : [{backgroundColor: 'white'}, styles.option]}>
+            <Pressable 
+              onPress={()=> 
+                {
+                  !isPressed && setValue(value)
+                  isPressed && setValue('')
+                  setIsPressed(!isPressed)
+                }}> 
+                {() => 
+                  <View style={isPressed? [{backgroundColor: 'lightgray', shadowColor: "#FFFFFF"}, styles.option] : [{backgroundColor: 'white', shadowColor: "#000000"}, styles.option]}>
                     {icon}
                   </View>
-                )}}
+                }
             </Pressable>
           : <></>
           }
@@ -55,7 +69,7 @@ export default function OptionCard({name, icon, href, nameFontSize = 12, setValu
 const styles = StyleSheet.create({
     option: {
       //backgroundColor: "white",
-      shadowColor: "#000000",
+      //shadowColor: "#000000",
       shadowOffset: {
         width: 4,
         height: 4,

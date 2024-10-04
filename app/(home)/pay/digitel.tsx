@@ -6,12 +6,16 @@ import {
     SafeAreaView,
     View,
     Pressable,
-    TextInput
+    TextInput,
+    Dimensions
   } from "react-native";
 import {useState, useEffect} from 'react';
 import { Dropdown } from "react-native-element-dropdown";
 import OptionsCarousel from "@/components/OptionsCarousel";
 import OptionCard from "@/components/OptionCard";
+import Carousel from 'react-native-reanimated-carousel';
+import Card from "@/components/Card";
+import WalletButton from "@/components/WalletButton";
   
   export default function DigitelScreen() {
     const [isProductFocused, setIsProductFocused] = useState(false);
@@ -22,7 +26,17 @@ import OptionCard from "@/components/OptionCard";
     const [phonePrefix, setPhonePrefix] = useState('0');
     const [BsAmount, setBsAmount] = useState('');
     const [DollarsAmount, setDollarsAmount] = useState(0.00);
+    const [buttonPressedArray, setButtonPressedArray] = useState([false])
     const Bs2Dollars = 36.82;
+    const width = Dimensions.get('window').width;
+    const colors: [[string, string], [string, string]] = [
+      ["#5de0e6", "#004aad"],
+      ["#E6A45D", "#AD2300"]
+  ]
+  const currencies: [string, string] = [
+      'USD', 
+      'BS',
+  ]
     const products=[
       {value: '1', label: 'Móvil Prepago'},
       {value: '2', label: 'Móvil Pospago'},
@@ -111,13 +125,16 @@ import OptionCard from "@/components/OptionCard";
             <TextInput style={[{flex: 1}, styles.input]} placeholder="Número de Teléfono" placeholderTextColor='gray' inputMode="numeric"/>
             </View>
             </View>
-              <OptionsCarousel>
-                <OptionCard icon={<Text style={{fontSize: 18, fontWeight: '600'}}>Bs 50</Text>} value='50' setValue={setBsAmount} />
-                <OptionCard icon={<Text style={{fontSize: 18, fontWeight: '600'}}>Bs 100</Text>} value='100' setValue={setBsAmount} />
-                <OptionCard icon={<Text style={{fontSize: 18, fontWeight: '600'}}>Bs 150</Text>} value='150' setValue={setBsAmount} />
-                <OptionCard icon={<Text style={{fontSize: 18, fontWeight: '600'}}>Bs 200</Text>} value='200' setValue={setBsAmount} />
-                <OptionCard icon={<Text style={{fontSize: 18, fontWeight: '600'}}>Bs 300</Text>} value='300' setValue={setBsAmount} />
-              </OptionsCarousel>   
+            <Text>Seleccione el monto a recargar</Text>
+              <OptionsCarousel buttonPressedArray={buttonPressedArray} setButtonPressedArray={setButtonPressedArray}>
+                <OptionCard icon={<Text style={{fontSize: 18, fontWeight: '600'}}>Bs 50</Text>} value='50' setValue={setBsAmount} buttonPressed={buttonPressedArray} setButtonPressed={setButtonPressedArray}/>
+                <OptionCard icon={<Text style={{fontSize: 18, fontWeight: '600'}}>Bs 100</Text>} value='100' setValue={setBsAmount} buttonPressed={buttonPressedArray} setButtonPressed={setButtonPressedArray}/>
+                <OptionCard icon={<Text style={{fontSize: 18, fontWeight: '600'}}>Bs 150</Text>} value='150' setValue={setBsAmount} buttonPressed={buttonPressedArray} setButtonPressed={setButtonPressedArray}/>
+                <OptionCard icon={<Text style={{fontSize: 18, fontWeight: '600'}}>Bs 200</Text>} value='200' setValue={setBsAmount} buttonPressed={buttonPressedArray} setButtonPressed={setButtonPressedArray}/>
+                <OptionCard icon={<Text style={{fontSize: 18, fontWeight: '600'}}>Bs 300</Text>} value='300' setValue={setBsAmount} buttonPressed={buttonPressedArray} setButtonPressed={setButtonPressedArray}/>
+              </OptionsCarousel>  
+              <Text>Seleccione la billetera con la que efectuará el pago</Text> 
+              <WalletButton />
               <Text style={{fontSize: 18}}>Pagará</Text>
               <Text style={{fontSize: 24, fontWeight: 500}}>${BsAmount === ''? '0.00' : DollarsAmount.toPrecision(3)}</Text>
               <Text style={{fontSize: 18}}>de su wallet </Text>

@@ -71,16 +71,17 @@ const styles = StyleSheet.create({
       //backgroundColor: "white",
       //shadowColor: "#000000",
       shadowOffset: {
-        width: 4,
-        height: 4,
+        width: 0,
+        height: 2,
       },
       shadowOpacity: 0.25,
-      shadowRadius: 10,
+      shadowRadius: 4,
       borderRadius: 20,
       margin: 5,
       width: 80,
       height: 90,
       alignItems: "center",
       justifyContent: "center",
+      elevation: 5
     },
   });

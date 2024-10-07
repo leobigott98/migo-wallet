@@ -7,7 +7,7 @@ import {
     View,
     Pressable,
     TextInput,
-    Dimensions
+    Dimensions,
   } from "react-native";
 import {useState, useEffect} from 'react';
 import { Dropdown } from "react-native-element-dropdown";
@@ -16,6 +16,10 @@ import OptionCard from "@/components/OptionCard";
 import Carousel from 'react-native-reanimated-carousel';
 import Card from "@/components/Card";
 import WalletButton from "@/components/WalletButton";
+import WalletChooser from "@/components/WalletChooser";
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import MyModal from "@/components/MyModal";
+import { useNavigation } from "expo-router";
   
   export default function DigitelScreen() {
     const [isProductFocused, setIsProductFocused] = useState(false);
@@ -26,7 +30,13 @@ import WalletButton from "@/components/WalletButton";
     const [phonePrefix, setPhonePrefix] = useState('0');
     const [BsAmount, setBsAmount] = useState('');
     const [DollarsAmount, setDollarsAmount] = useState(0.00);
-    const [buttonPressedArray, setButtonPressedArray] = useState([false])
+    const [buttonPressedArray, setButtonPressedArray] = useState([false]);
+    const [selectedCurrency, setSelectedCurrency] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [acceptTransaction, setAcceptTransaction] = useState(false);
+    const [loadingTransaction, setLoadingTransaction] = useState(true);
+    const navigate = useNavigation();
     const Bs2Dollars = 36.82;
     const width = Dimensions.get('window').width;
     const colors: [[string, string], [string, string]] = [
@@ -61,11 +71,43 @@ import WalletButton from "@/components/WalletButton";
     useEffect((()=>{
       calculateDollars()
     }), [BsAmount])
+
+    const showModal = () => setIsModalVisible(true );
+    const hideModal = () => setIsModalVisible(false);
   
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollView}>
           <View style={{alignItems: 'center'}}>
+            <MyModal 
+              visible={isModalVisible}
+              dismiss={hideModal}
+              transparent={true}
+              animationType="fade"
+            >
+              <Text style={styles.confirmationModalTitle}>Confirmación</Text>
+              <Text style={styles.confirmationModalInfo}>Recarga {products.find((element)=> element.value === product)?.label} Digitel</Text>
+              <Text style={styles.confirmationModalInfo}>Número: {digitelPhonePrefixes.find((element)=> element.value === phonePrefix)?.label}-{phoneNumber}</Text>
+              <Text style={styles.confirmationModalInfo}>Monto Bs: {BsAmount}</Text>
+              <Text style={styles.confirmationModalInfo}>Monto $: {DollarsAmount.toPrecision(3)}</Text>
+              <Text style={styles.confirmationModalInfo}>Wallet: {selectedCurrency} Wallet</Text>
+              <View style={{position: 'relative', marginTop: 'auto', flexDirection: 'row', flexGrow: 1, justifyContent: 'space-around', width: 300}}>
+                <Pressable > 
+                    {({pressed}) => (
+                      <View style={[pressed? {backgroundColor: '#048EA9'} : {backgroundColor: '#00B4D8'}, styles.confirmationButton]}>
+                        <Text style={{color: 'white', fontSize: 18, fontWeight: 'bold'}}>Pagar</Text>
+                      </View>
+                  )}
+                </Pressable>
+                <Pressable onPress={hideModal} > 
+                    {({pressed}) => (
+                      <View style={[pressed? {backgroundColor: 'lightgray'} : {backgroundColor: 'white'}, styles.confirmationButton, {borderColor: 'lightgray', borderWidth: 1}]}>
+                        <Text style={{fontSize: 18, color: 'black'}}>Cancelar</Text>
+                      </View>
+                  )}
+                </Pressable>
+            </View>
+            </MyModal>
             <Text style={{fontSize: 18}}>Indique los datos del servicio a pagar</Text>
             <Dropdown
               style={[styles.dropdown, {width: 200,}, isProductFocused && { borderColor: 'blue' }]}
@@ -122,7 +164,7 @@ import WalletButton from "@/components/WalletButton";
                   setIsPhonePrefixFocus(false);
                 }}
               />
-            <TextInput style={[{flex: 1}, styles.input]} placeholder="Número de Teléfono" placeholderTextColor='gray' inputMode="numeric"/>
+            <TextInput style={[{flex: 1}, styles.input]} placeholder="Número de Teléfono" placeholderTextColor='gray' inputMode="numeric" onChangeText={setPhoneNumber}/>
             </View>
             </View>
             <Text>Seleccione el monto a recargar</Text>
@@ -134,9 +176,9 @@ import WalletButton from "@/components/WalletButton";
                 <OptionCard icon={<Text style={{fontSize: 18, fontWeight: '600'}}>Bs 300</Text>} value='300' setValue={setBsAmount} buttonPressed={buttonPressedArray} setButtonPressed={setButtonPressedArray}/>
               </OptionsCarousel>  
               <Text>Seleccione la billetera con la que efectuará el pago</Text> 
-              <WalletButton />
+              <WalletChooser selectedCurrency={selectedCurrency} setSelectedCurrency={setSelectedCurrency}/>
               <Text style={{fontSize: 18}}>Pagará</Text>
-              <Text style={{fontSize: 24, fontWeight: 500}}>${BsAmount === ''? '0.00' : DollarsAmount.toPrecision(3)}</Text>
+              <Text style={{fontSize: 24, fontWeight: 500}}>{BsAmount === ''? '0.00' : selectedCurrency === 'Bs' ? 'Bs'+BsAmount : '$'+DollarsAmount.toPrecision(3)}</Text>
               <Text style={{fontSize: 18}}>de su wallet </Text>
             </>
           ) : product === '2' ?
@@ -155,14 +197,14 @@ import WalletButton from "@/components/WalletButton";
         
         </ScrollView>
         <View style={{position: 'relative', marginTop: 'auto'}}>
-          <Pressable > 
+          <Pressable onPress={()=>setIsModalVisible(true)} disabled={selectedCurrency !== '' && BsAmount !== '' && phonePrefix !== '0' && phoneNumber !== '' && product !== '' ? false : true}> 
               {({pressed}) => (
-                <View style={[pressed? {backgroundColor: '#048EA9'} : {backgroundColor: '#00B4D8'}, styles.rechargeButton]}>
+                <View style={[selectedCurrency !== '' && BsAmount !== '' && phonePrefix !== '0' && phoneNumber !== '' && product !== '' ? pressed? {backgroundColor: '#048EA9'} : {backgroundColor: '#00B4D8'} : {backgroundColor: 'lightgray'} , styles.rechargeButton]}>
                   <Text style={{color: 'white', fontSize: 14, fontWeight: 'bold'}}>Pagar</Text>
                 </View>
             )}
           </Pressable>
-          <Pressable > 
+          <Pressable onPress={()=> navigate.goBack() }> 
               {({pressed}) => (
                 <View style={[pressed? {backgroundColor: 'lightgray'} : {backgroundColor: 'white'}, styles.cancelButtom]}>
                   <Text style={{fontSize: 14, color: 'black'}}>Cancelar</Text>
@@ -260,6 +302,52 @@ import WalletButton from "@/components/WalletButton";
       //borderRadius: 20, 
       borderColor: 'lightgray',
       //backgroundColor: 'white'
+    },
+    modalContent: {
+      height: '25%',
+      width: '100%',
+      backgroundColor: '#25292e',
+      borderTopRightRadius: 18,
+      borderTopLeftRadius: 18,
+      position: 'absolute',
+      bottom: 0,
+    },
+    titleContainer: {
+      height: '16%',
+      backgroundColor: '#464C55',
+      borderTopRightRadius: 10,
+      borderTopLeftRadius: 10,
+      paddingHorizontal: 20,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    title: {
+      color: '#fff',
+      fontSize: 16,
+    },
+    confirmationModalTitle: {
+      fontSize: 24, 
+      fontWeight: '600', 
+      marginBottom: 10
+
+    },
+    confirmationModalInfo:{
+      fontSize: 20, 
+      //fontWeight: '500', 
+      marginBottom: 5
+    },
+    confirmationButton: {
+      flexGrow: 1,
+      width: 125,
+      marginTop: 30,
+      //backgroundColor: '#90E0EF',
+      borderRadius: 20,
+      alignItems: 'center', 
+      justifyContent: 'center', 
+      //height: 50,  
+      //padding: 5,
+      padding: 5   
     },
   });
   

@@ -24,8 +24,8 @@ export default function TransferScreen() {
         </View>
         <ScrollView contentContainerStyle={styles.rechargeOptionsBox}>
           <Text style={{fontWeight: '500'}}>Opciones de Transferencia:</Text>
-          <DropdownMenu name='Enviar Dinero de MiGo a MiGo' type='pago-movil' redirect="/"/>
-          <DropdownMenu name='Enviar Dinero a través de Pago Móvil' type='pago-movil' redirect="/"/>
+          <DropdownMenu name='Enviar Dinero de MiGo a MiGo'/>
+          <DropdownMenu name='Transferir Dinero entre Wallets' />
         </ScrollView>
       </ScrollView>
     </SafeAreaView>

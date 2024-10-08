@@ -8,6 +8,7 @@ import {
     Pressable,
     TextInput,
     Dimensions,
+    ActivityIndicator
   } from "react-native";
 import {useState, useEffect} from 'react';
 import { Dropdown } from "react-native-element-dropdown";
@@ -20,6 +21,7 @@ import WalletChooser from "@/components/WalletChooser";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import MyModal from "@/components/MyModal";
 import { useNavigation } from "expo-router";
+import AntDesign from '@expo/vector-icons/AntDesign';
   
   export default function DigitelScreen() {
     const [isProductFocused, setIsProductFocused] = useState(false);
@@ -35,7 +37,10 @@ import { useNavigation } from "expo-router";
     const [phoneNumber, setPhoneNumber] = useState('');
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [acceptTransaction, setAcceptTransaction] = useState(false);
-    const [loadingTransaction, setLoadingTransaction] = useState(true);
+    const [loadingTransaction, setLoadingTransaction] = useState(false);
+    const [success, setSucess] = useState(false);
+    const [error, setError] = useState(false);
+    const [message, setMessage] = useState('')
     const navigate = useNavigation();
     const Bs2Dollars = 36.82;
     const width = Dimensions.get('window').width;
@@ -72,8 +77,24 @@ import { useNavigation } from "expo-router";
       calculateDollars()
     }), [BsAmount])
 
+    useEffect(()=>{
+      if(acceptTransaction){
+        setTimeout(()=>{
+          setLoadingTransaction(false);
+          setAcceptTransaction(false);
+          setSucess(true);
+          setMessage('Su recarga fue procesada con éxito')
+        }, 3000)
+      }
+
+    },[acceptTransaction])
+
     const showModal = () => setIsModalVisible(true );
     const hideModal = () => setIsModalVisible(false);
+    const loadTransaction =()=>{
+      setAcceptTransaction(true);
+      setLoadingTransaction(true);
+    }
   
     return (
       <SafeAreaView style={styles.container}>
@@ -85,20 +106,40 @@ import { useNavigation } from "expo-router";
               transparent={true}
               animationType="fade"
             >
-              <Text style={styles.confirmationModalTitle}>Confirmación</Text>
-              <Text style={styles.confirmationModalInfo}>Recarga {products.find((element)=> element.value === product)?.label} Digitel</Text>
-              <Text style={styles.confirmationModalInfo}>Número: {digitelPhonePrefixes.find((element)=> element.value === phonePrefix)?.label}-{phoneNumber}</Text>
-              <Text style={styles.confirmationModalInfo}>Monto Bs: {BsAmount}</Text>
-              <Text style={styles.confirmationModalInfo}>Monto $: {DollarsAmount.toPrecision(3)}</Text>
-              <Text style={styles.confirmationModalInfo}>Wallet: {selectedCurrency} Wallet</Text>
-              <View style={{position: 'relative', marginTop: 'auto', flexDirection: 'row', flexGrow: 1, justifyContent: 'space-around', width: 300}}>
-                <Pressable > 
+              {loadingTransaction? 
+              <>
+                <Text style={[styles.confirmationModalTitle]}>Procesando...</Text>
+                <Text style={{marginBottom: 20}}>En unos segundos su transacción estará lista</Text>
+                <ActivityIndicator size='large' color='#00B4D8'  /> 
+              </>
+              : success ? 
+              <>
+              <AntDesign name="checkcircle" size={48} color="green" style={{margin: 15}} />
+              <Text style={[styles.confirmationModalTitle, {marginVertical: 5}]}>¡Transacción exitosa!</Text>
+              <Text style={{marginBottom: 20}}>{message}</Text>
+              <Pressable onPress={()=>{
+                hideModal
+                navigate.goBack()}} > 
                     {({pressed}) => (
-                      <View style={[pressed? {backgroundColor: '#048EA9'} : {backgroundColor: '#00B4D8'}, styles.confirmationButton]}>
-                        <Text style={{color: 'white', fontSize: 18, fontWeight: 'bold'}}>Pagar</Text>
+                      <View style={[pressed? {backgroundColor: 'lightgray', borderColor: 'lightgray', borderWidth: 1, borderRadius: 20, padding: 10, width: 100, justifyContent: 'center', alignItems: 'center'} : {backgroundColor: 'white', borderColor: 'lightgray', borderWidth: 1, borderRadius: 20, padding: 10, width: 100, justifyContent: 'center', alignItems: 'center'}]}>
+                        <Text style={{fontSize: 18, color: 'black'}}>Aceptar</Text>
                       </View>
                   )}
                 </Pressable>
+
+              </> 
+              :
+              <>
+              <Text style={[styles.confirmationModalTitle]}>¿Seguro?</Text>
+              <Text style={{marginBottom: 10}}>Verifica los datos antes de confirmar:</Text>
+              <View style={{borderRadius: 20, backgroundColor: 'lightgray', padding: 10}}>
+                <Text style={styles.confirmationModalInfo}>Recarga {products.find((element)=> element.value === product)?.label} Digitel</Text>
+                <Text style={styles.confirmationModalInfo}>Número: {digitelPhonePrefixes.find((element)=> element.value === phonePrefix)?.label}-{phoneNumber}</Text>
+                <Text style={styles.confirmationModalInfo}>Monto Bs: {BsAmount}</Text>
+                <Text style={styles.confirmationModalInfo}>Monto $: {DollarsAmount.toPrecision(3)}</Text>
+                <Text style={styles.confirmationModalInfo}>Wallet: {selectedCurrency} Wallet</Text>
+              </View>
+              <View style={{position: 'relative', marginTop: 'auto', flexDirection: 'row', flexGrow: 1, justifyContent: 'space-around', width: 300}}>
                 <Pressable onPress={hideModal} > 
                     {({pressed}) => (
                       <View style={[pressed? {backgroundColor: 'lightgray'} : {backgroundColor: 'white'}, styles.confirmationButton, {borderColor: 'lightgray', borderWidth: 1}]}>
@@ -106,7 +147,16 @@ import { useNavigation } from "expo-router";
                       </View>
                   )}
                 </Pressable>
+                <Pressable onPress={loadTransaction} > 
+                    {({pressed}) => (
+                      <View style={[pressed? {backgroundColor: '#048EA9'} : {backgroundColor: '#00B4D8'}, styles.confirmationButton]}>
+                        <Text style={{color: 'white', fontSize: 18, fontWeight: 'bold'}}>Pagar</Text>
+                      </View>
+                  )}
+                </Pressable>
             </View>
+            </>
+            }
             </MyModal>
             <Text style={{fontSize: 18}}>Indique los datos del servicio a pagar</Text>
             <Dropdown
@@ -197,7 +247,7 @@ import { useNavigation } from "expo-router";
         
         </ScrollView>
         <View style={{position: 'relative', marginTop: 'auto'}}>
-          <Pressable onPress={()=>setIsModalVisible(true)} disabled={selectedCurrency !== '' && BsAmount !== '' && phonePrefix !== '0' && phoneNumber !== '' && product !== '' ? false : true}> 
+          <Pressable onPress={showModal} disabled={selectedCurrency !== '' && BsAmount !== '' && phonePrefix !== '0' && phoneNumber !== '' && product !== '' ? false : true}> 
               {({pressed}) => (
                 <View style={[selectedCurrency !== '' && BsAmount !== '' && phonePrefix !== '0' && phoneNumber !== '' && product !== '' ? pressed? {backgroundColor: '#048EA9'} : {backgroundColor: '#00B4D8'} : {backgroundColor: 'lightgray'} , styles.rechargeButton]}>
                   <Text style={{color: 'white', fontSize: 14, fontWeight: 'bold'}}>Pagar</Text>

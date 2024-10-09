@@ -12,30 +12,18 @@ type Style = {
 } */
 
 type Props = {
-    name?: string,
+    name: string,
     icon: React.ReactNode,
-    href?: Href,
+    href: Href,
     nameFontSize?: number,
-    setValue?: Dispatch<SetStateAction<string>>,
-    value?: string,
-    buttonPressed?: boolean[],
-    setButtonPressed?: Dispatch<SetStateAction<boolean[]>>,
-    index?: number
+    style?: object,
 }
 
-export default function OptionCard({name, icon, href, nameFontSize = 12, setValue, value, index}: Props) {
+export default function OptionCard({name, icon, href, nameFontSize = 12, style}: Props) {
   const [isPressed, setIsPressed] = useState(false);
-  /* useEffect(()=>{
-    if(setButtonPressed){
-      setButtonPressed(buttonPressed)
-    }
-    
-
-  },[isPressed]) */
 
     return(
-        <View style={{ alignItems: "center", justifyContent: "center" }}>
-          {href? 
+        <View style={[{ alignItems: "center", justifyContent: "center" }, style]}>
             <Link href={href} asChild >
               <Pressable > 
               {({pressed}) => (
@@ -46,22 +34,6 @@ export default function OptionCard({name, icon, href, nameFontSize = 12, setValu
               )}
               </Pressable>
             </Link>
-          : setValue && value ?
-            <Pressable 
-              onPress={()=> 
-                {
-                  !isPressed && setValue(value)
-                  isPressed && setValue('')
-                  setIsPressed(!isPressed)
-                }}> 
-                {() => 
-                  <View style={isPressed? [{backgroundColor: 'lightgray', shadowColor: "#FFFFFF"}, styles.option] : [{backgroundColor: 'white', shadowColor: "#000000"}, styles.option]}>
-                    {icon}
-                  </View>
-                }
-            </Pressable>
-          : <></>
-          }
           </View>
     )
 }

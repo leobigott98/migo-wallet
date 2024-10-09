@@ -31,7 +31,7 @@ export default function HomeScreen() {
           <OptionCard href='/withdraw' icon={<MaterialCommunityIcons name="cash-fast" size={45} color="black" />} name='Retirar' />
           <OptionCard href='/pay' icon={<Ionicons name="receipt" size={35} color="black" style={{padding: 5}} />} name='Servicios' />
           <OptionCard href='/transfer' icon={<FontAwesome6 name="money-bill-transfer" size={35} color="black" style={{padding: 5}} />} name='Transferir' />
-          <OptionCard href='/crediexpress' icon={<Fontisto name="wallet" size={35} color="black" style={{padding: 5}}/>} name='CrediExpress' nameFontSize={10}/>
+          <OptionCard href='/crediexpress' icon={<Fontisto name="wallet" size={35} color="black" style={{padding: 5}}/>} name='CrediExpress' nameFontSize={10} style={{marginRight: 20}}/>
         </OptionsCarousel>
         
         <Text style={{position: 'relative', right: 63, fontSize: 20, fontWeight: '500', marginBottom: 5}}>Últimas transacciones</Text>

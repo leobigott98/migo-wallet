@@ -12,7 +12,12 @@ export default function MyModal(props: {
     dismiss: ()=>void, 
     transparent: boolean, 
     animationType: 'none' | 'slide' | 'fade'
+    lock: boolean
     }) {
+
+    const closeModal=()=>{
+        props.dismiss
+    }
 
     return(
         <View>
@@ -22,7 +27,7 @@ export default function MyModal(props: {
                 onRequestClose={props.dismiss}
                 animationType={props.animationType}
             >
-            <TouchableWithoutFeedback onPress={props.dismiss}>
+            <TouchableWithoutFeedback onPress={!props.lock? props.dismiss : undefined}>
                 <View style={styles.modalOverlay} />
             </TouchableWithoutFeedback>
 

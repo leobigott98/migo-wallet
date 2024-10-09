@@ -32,7 +32,6 @@ import AntDesign from '@expo/vector-icons/AntDesign';
     const [phonePrefix, setPhonePrefix] = useState('0');
     const [BsAmount, setBsAmount] = useState('');
     const [DollarsAmount, setDollarsAmount] = useState(0.00);
-    const [buttonPressedArray, setButtonPressedArray] = useState([false]);
     const [selectedCurrency, setSelectedCurrency] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -41,8 +40,10 @@ import AntDesign from '@expo/vector-icons/AntDesign';
     const [success, setSucess] = useState(false);
     const [error, setError] = useState(false);
     const [message, setMessage] = useState('')
+    const [lockModal, setLockModal] = useState(false)
+    const [rechargeValues, setRechargeValues] = useState([''])
+    const [Bs2Dollars, setBs2Dollars] = useState(36.82);
     const navigate = useNavigation();
-    const Bs2Dollars = 36.82;
     const width = Dimensions.get('window').width;
     const colors: [[string, string], [string, string]] = [
       ["#5de0e6", "#004aad"],
@@ -89,11 +90,22 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 
     },[acceptTransaction])
 
+    useEffect(()=>{
+      if(product === '3' || product === '2')
+        setPhonePrefix('0');
+    },[product])
+
+    useEffect(()=>{
+      setRechargeValues(['50', '100', '150', '200', '300', '350', '500']);
+      setBs2Dollars(37.5295)
+    },[])
+
     const showModal = () => setIsModalVisible(true );
     const hideModal = () => setIsModalVisible(false);
     const loadTransaction =()=>{
       setAcceptTransaction(true);
       setLoadingTransaction(true);
+      setLockModal(true);
     }
   
     return (
@@ -105,6 +117,8 @@ import AntDesign from '@expo/vector-icons/AntDesign';
               dismiss={hideModal}
               transparent={true}
               animationType="fade"
+              lock={lockModal}
+
             >
               {loadingTransaction? 
               <>
@@ -119,6 +133,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
               <Text style={{marginBottom: 20}}>{message}</Text>
               <Pressable onPress={()=>{
                 hideModal
+                setLockModal(false);
                 navigate.goBack()}} > 
                     {({pressed}) => (
                       <View style={[pressed? {backgroundColor: 'lightgray', borderColor: 'lightgray', borderWidth: 1, borderRadius: 20, padding: 10, width: 100, justifyContent: 'center', alignItems: 'center'} : {backgroundColor: 'white', borderColor: 'lightgray', borderWidth: 1, borderRadius: 20, padding: 10, width: 100, justifyContent: 'center', alignItems: 'center'}]}>
@@ -134,7 +149,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
               <Text style={{marginBottom: 10}}>Verifica los datos antes de confirmar:</Text>
               <View style={{borderRadius: 20, backgroundColor: 'lightgray', padding: 10}}>
                 <Text style={styles.confirmationModalInfo}>Recarga {products.find((element)=> element.value === product)?.label} Digitel</Text>
-                <Text style={styles.confirmationModalInfo}>Número: {digitelPhonePrefixes.find((element)=> element.value === phonePrefix)?.label}-{phoneNumber}</Text>
+                <Text style={styles.confirmationModalInfo}>Número: {product === '3' ? fijoPhonePrefixes.find((element)=> element.value === phonePrefix)?.label : digitelPhonePrefixes.find((element)=> element.value === phonePrefix)?.label}-{phoneNumber}</Text>
                 <Text style={styles.confirmationModalInfo}>Monto Bs: {BsAmount}</Text>
                 <Text style={styles.confirmationModalInfo}>Monto $: {DollarsAmount.toPrecision(3)}</Text>
                 <Text style={styles.confirmationModalInfo}>Wallet: {selectedCurrency} Wallet</Text>
@@ -218,12 +233,14 @@ import AntDesign from '@expo/vector-icons/AntDesign';
             </View>
             </View>
             <Text>Seleccione el monto a recargar</Text>
-              <OptionsCarousel buttonPressedArray={buttonPressedArray} setButtonPressedArray={setButtonPressedArray}>
-                <OptionCard icon={<Text style={{fontSize: 18, fontWeight: '600'}}>Bs 50</Text>} value='50' setValue={setBsAmount} buttonPressed={buttonPressedArray} setButtonPressed={setButtonPressedArray}/>
-                <OptionCard icon={<Text style={{fontSize: 18, fontWeight: '600'}}>Bs 100</Text>} value='100' setValue={setBsAmount} buttonPressed={buttonPressedArray} setButtonPressed={setButtonPressedArray}/>
-                <OptionCard icon={<Text style={{fontSize: 18, fontWeight: '600'}}>Bs 150</Text>} value='150' setValue={setBsAmount} buttonPressed={buttonPressedArray} setButtonPressed={setButtonPressedArray}/>
-                <OptionCard icon={<Text style={{fontSize: 18, fontWeight: '600'}}>Bs 200</Text>} value='200' setValue={setBsAmount} buttonPressed={buttonPressedArray} setButtonPressed={setButtonPressedArray}/>
-                <OptionCard icon={<Text style={{fontSize: 18, fontWeight: '600'}}>Bs 300</Text>} value='300' setValue={setBsAmount} buttonPressed={buttonPressedArray} setButtonPressed={setButtonPressedArray}/>
+              <OptionsCarousel 
+                automatic 
+                values={rechargeValues} 
+                setValue={setBsAmount} 
+                icons={rechargeValues.map((value)=>{return (
+                  <Text style={{fontSize: 18, fontWeight: '600'}}>Bs {value}</Text>
+                )})
+                }>
               </OptionsCarousel>  
               <Text>Seleccione la billetera con la que efectuará el pago</Text> 
               <WalletChooser selectedCurrency={selectedCurrency} setSelectedCurrency={setSelectedCurrency}/>

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState, useEffect } from "react";
 import {View, Text, StyleSheet, Pressable} from "react-native";
 import WalletButton from "./WalletButton";
 
@@ -6,6 +6,14 @@ import WalletButton from "./WalletButton";
 export default function WalletChooser(props: {selectedCurrency: string, setSelectedCurrency: Dispatch<SetStateAction<string>>}) {
     const [bsSelected, setBsSelected] = useState(false);
     const [usdSelected, setUsdSelected] = useState(false);
+
+    useEffect(()=>{
+        if(props.selectedCurrency === ''){
+            setBsSelected(false);
+            setUsdSelected(false);
+        }
+    }, [props.selectedCurrency])
+
 
     const selectBsWallet = ()=>{
         setBsSelected(!bsSelected);

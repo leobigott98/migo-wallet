@@ -26,7 +26,7 @@ export default function HomeScreen() {
         <CardsCarousel/>       
         
         <Text style={{position: 'relative', right: 120, fontSize: 20, fontWeight: '500', marginTop: 5}}>Opciones</Text>
-        <OptionsCarousel>
+        <OptionsCarousel reset={false}>
           <OptionCard href='/add-money' icon={<MaterialCommunityIcons name="cash-plus" size={45} color="black" />} name='Recargar' />
           <OptionCard href='/withdraw' icon={<MaterialCommunityIcons name="cash-fast" size={45} color="black" />} name='Retirar' />
           <OptionCard href='/pay' icon={<Ionicons name="receipt" size={35} color="black" style={{padding: 5}} />} name='Servicios' />

@@ -7,28 +7,16 @@ import {
     View,
     Pressable,
     TextInput,
-    Dimensions,
-    ActivityIndicator
   } from "react-native";
 import {useState, useEffect} from 'react';
 import { Dropdown } from "react-native-element-dropdown";
-import OptionsCarousel from "@/components/OptionsCarousel";
-import OptionCard from "@/components/OptionCard";
-import Carousel from 'react-native-reanimated-carousel';
-import Card from "@/components/Card";
-import WalletButton from "@/components/WalletButton";
-import WalletChooser from "@/components/WalletChooser";
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import MyModal from "@/components/MyModal";
 import { useNavigation } from "expo-router";
-import AntDesign from '@expo/vector-icons/AntDesign';
+import PrepaidPhoneForm from "@/components/PrepaidPhoneForm";
+import TransactionModal from "@/components/TransactionModal";
   
   export default function DigitelScreen() {
     const [isProductFocused, setIsProductFocused] = useState(false);
     const [product, setProduct] = useState('0');
-    const [isDocumentTypeFocus, setIsDocumentTypeFocus] = useState(false);
-    const [isPhonePrefixFocus, setIsPhonePrefixFocus] = useState(false);
-    const [nroContrato, setNroContrato] = useState('')
     const [phonePrefix, setPhonePrefix] = useState('0');
     const [BsAmount, setBsAmount] = useState('');
     const [DollarsAmount, setDollarsAmount] = useState(0.00);
@@ -39,20 +27,13 @@ import AntDesign from '@expo/vector-icons/AntDesign';
     const [loadingTransaction, setLoadingTransaction] = useState(false);
     const [success, setSucess] = useState(false);
     const [error, setError] = useState(false);
-    const [message, setMessage] = useState('')
-    const [lockModal, setLockModal] = useState(false)
-    const [rechargeValues, setRechargeValues] = useState([''])
+    const [message, setMessage] = useState('');
+    const [lockModal, setLockModal] = useState(false);
+    const [rechargeValues, setRechargeValues] = useState(['']);
+    const [resetCarousel, setResetCarousel] = useState(false);
     const [Bs2Dollars, setBs2Dollars] = useState(36.82);
     const navigate = useNavigation();
-    const width = Dimensions.get('window').width;
-    const colors: [[string, string], [string, string]] = [
-      ["#5de0e6", "#004aad"],
-      ["#E6A45D", "#AD2300"]
-  ]
-  const currencies: [string, string] = [
-      'USD', 
-      'BS',
-  ]
+
     const products=[
       {value: '1', label: 'Móvil Prepago'},
       {value: '2', label: 'Móvil Pospago'},
@@ -84,15 +65,18 @@ import AntDesign from '@expo/vector-icons/AntDesign';
           setLoadingTransaction(false);
           setAcceptTransaction(false);
           setSucess(true);
-          setMessage('Su recarga fue procesada con éxito')
+          setMessage('Su recarga fue realizada.')
         }, 3000)
       }
 
     },[acceptTransaction])
 
     useEffect(()=>{
-      if(product === '3' || product === '2')
-        setPhonePrefix('0');
+      setPhonePrefix('0');
+      setPhoneNumber('');
+      setResetCarousel(false);
+      setSelectedCurrency('');
+      setBsAmount('');
     },[product])
 
     useEffect(()=>{
@@ -102,77 +86,35 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 
     const showModal = () => setIsModalVisible(true );
     const hideModal = () => setIsModalVisible(false);
-    const loadTransaction =()=>{
-      setAcceptTransaction(true);
-      setLoadingTransaction(true);
-      setLockModal(true);
-    }
   
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollView}>
           <View style={{alignItems: 'center'}}>
-            <MyModal 
-              visible={isModalVisible}
-              dismiss={hideModal}
-              transparent={true}
-              animationType="fade"
-              lock={lockModal}
-
-            >
-              {loadingTransaction? 
-              <>
-                <Text style={[styles.confirmationModalTitle]}>Procesando...</Text>
-                <Text style={{marginBottom: 20}}>En unos segundos su transacción estará lista</Text>
-                <ActivityIndicator size='large' color='#00B4D8'  /> 
-              </>
-              : success ? 
-              <>
-              <AntDesign name="checkcircle" size={48} color="green" style={{margin: 15}} />
-              <Text style={[styles.confirmationModalTitle, {marginVertical: 5}]}>¡Transacción exitosa!</Text>
-              <Text style={{marginBottom: 20}}>{message}</Text>
-              <Pressable onPress={()=>{
-                hideModal
-                setLockModal(false);
-                navigate.goBack()}} > 
-                    {({pressed}) => (
-                      <View style={[pressed? {backgroundColor: 'lightgray', borderColor: 'lightgray', borderWidth: 1, borderRadius: 20, padding: 10, width: 100, justifyContent: 'center', alignItems: 'center'} : {backgroundColor: 'white', borderColor: 'lightgray', borderWidth: 1, borderRadius: 20, padding: 10, width: 100, justifyContent: 'center', alignItems: 'center'}]}>
-                        <Text style={{fontSize: 18, color: 'black'}}>Aceptar</Text>
-                      </View>
-                  )}
-                </Pressable>
-
-              </> 
-              :
-              <>
-              <Text style={[styles.confirmationModalTitle]}>¿Seguro?</Text>
-              <Text style={{marginBottom: 10}}>Verifica los datos antes de confirmar:</Text>
-              <View style={{borderRadius: 20, backgroundColor: 'lightgray', padding: 10}}>
-                <Text style={styles.confirmationModalInfo}>Recarga {products.find((element)=> element.value === product)?.label} Digitel</Text>
-                <Text style={styles.confirmationModalInfo}>Número: {product === '3' ? fijoPhonePrefixes.find((element)=> element.value === phonePrefix)?.label : digitelPhonePrefixes.find((element)=> element.value === phonePrefix)?.label}-{phoneNumber}</Text>
-                <Text style={styles.confirmationModalInfo}>Monto Bs: {BsAmount}</Text>
-                <Text style={styles.confirmationModalInfo}>Monto $: {DollarsAmount.toPrecision(3)}</Text>
-                <Text style={styles.confirmationModalInfo}>Wallet: {selectedCurrency} Wallet</Text>
-              </View>
-              <View style={{position: 'relative', marginTop: 'auto', flexDirection: 'row', flexGrow: 1, justifyContent: 'space-around', width: 300}}>
-                <Pressable onPress={hideModal} > 
-                    {({pressed}) => (
-                      <View style={[pressed? {backgroundColor: 'lightgray'} : {backgroundColor: 'white'}, styles.confirmationButton, {borderColor: 'lightgray', borderWidth: 1}]}>
-                        <Text style={{fontSize: 18, color: 'black'}}>Cancelar</Text>
-                      </View>
-                  )}
-                </Pressable>
-                <Pressable onPress={loadTransaction} > 
-                    {({pressed}) => (
-                      <View style={[pressed? {backgroundColor: '#048EA9'} : {backgroundColor: '#00B4D8'}, styles.confirmationButton]}>
-                        <Text style={{color: 'white', fontSize: 18, fontWeight: 'bold'}}>Pagar</Text>
-                      </View>
-                  )}
-                </Pressable>
-            </View>
-            </>
-            }
-            </MyModal>
+            <TransactionModal
+              BsAmount={BsAmount}
+              DollarsAmount={DollarsAmount}
+              acceptTransaction={acceptTransaction}
+              digitelPhonePrefixes={digitelPhonePrefixes}
+              error={error}
+              fijoPhonePrefix={phonePrefix}
+              fijoPhonePrefixes={fijoPhonePrefixes}
+              hideModal={hideModal}
+              isModalVisible={isModalVisible}
+              loadingTransaction={loadingTransaction}
+              lockModal={lockModal}
+              message={message}
+              navigate={navigate}
+              phoneNumber={phoneNumber}
+              phonePrefix={phonePrefix}
+              product={product}
+              products={products}
+              selectedCurrency={selectedCurrency}
+              setAcceptTransaction={setAcceptTransaction}
+              setLoadingTransaction={setLoadingTransaction}
+              setLockModal={setLockModal}
+              success={success}
+            />
             <Text style={{fontSize: 18}}>Indique los datos del servicio a pagar</Text>
             <Dropdown
               style={[styles.dropdown, {width: 200,}, isProductFocused && { borderColor: 'blue' }]}
@@ -193,61 +135,31 @@ import AntDesign from '@expo/vector-icons/AntDesign';
               onChange={item => {
                 setProduct(item.value);
                 setIsProductFocused(false);
+                setResetCarousel(true);
               }}
           />
           </View>          
         {
           product === '1' || product === '3' || product === '4'?
-          (<>
-          <View style={{
-            //borderColor: 'lightgray', 
-            paddingTop: 0,
-            marginTop: 0,
-            //padding: 5, 
-            margin: 5, 
-            //borderRadius: 20,  
-            width: 350,}}>
-            <View style={{display: 'flex', flexDirection: "row", margin: 0}}> 
-              <Dropdown
-                style={[styles.dropdown, {width: 100,}, isPhonePrefixFocus && { borderColor: 'blue' }]}
-                placeholderStyle={styles.placeholderStyle}
-                selectedTextStyle={styles.selectedTextStyle}
-                inputSearchStyle={styles.inputSearchStyle}
-                iconStyle={styles.iconStyle}
-                data={product === '1' || product === '4'? digitelPhonePrefixes : fijoPhonePrefixes}
-                //search
-                maxHeight={300}
-                labelField="label"
-                valueField="value"
-                placeholder={!isPhonePrefixFocus && (product === '1' || product === '4') ? '0412' : !isPhonePrefixFocus && product === '3' ? '0212' : '...'}
-                //searchPlaceholder="Search..."
-                value={phonePrefix}
-                onFocus={() => setIsPhonePrefixFocus(true)}
-                onBlur={() => setIsDocumentTypeFocus(false)}
-                onChange={item => {
-                  setPhonePrefix(item.value);
-                  setIsPhonePrefixFocus(false);
-                }}
-              />
-            <TextInput style={[{flex: 1}, styles.input]} placeholder="Número de Teléfono" placeholderTextColor='gray' inputMode="numeric" onChangeText={setPhoneNumber}/>
-            </View>
-            </View>
-            <Text>Seleccione el monto a recargar</Text>
-              <OptionsCarousel 
-                automatic 
-                values={rechargeValues} 
-                setValue={setBsAmount} 
-                icons={rechargeValues.map((value)=>{return (
-                  <Text style={{fontSize: 18, fontWeight: '600'}}>Bs {value}</Text>
-                )})
-                }>
-              </OptionsCarousel>  
-              <Text>Seleccione la billetera con la que efectuará el pago</Text> 
-              <WalletChooser selectedCurrency={selectedCurrency} setSelectedCurrency={setSelectedCurrency}/>
-              <Text style={{fontSize: 18}}>Pagará</Text>
-              <Text style={{fontSize: 24, fontWeight: 500}}>{BsAmount === ''? '0.00' : selectedCurrency === 'Bs' ? 'Bs'+BsAmount : '$'+DollarsAmount.toPrecision(3)}</Text>
-              <Text style={{fontSize: 18}}>de su wallet </Text>
-            </>
+          (
+          <PrepaidPhoneForm
+            bsAmount={BsAmount}
+            conversionRate={Bs2Dollars}
+            dollarsAmount={DollarsAmount}
+            fijoPhonePrefixes={fijoPhonePrefixes}
+            phoneNumber={phoneNumber}
+            phonePrefix={phonePrefix}
+            phonePrefixes={digitelPhonePrefixes}
+            product={product}
+            rechargeValues={rechargeValues}
+            resetCarousel={resetCarousel}
+            selectedCurrency={selectedCurrency}
+            setBsAmount={setBsAmount}
+            setDollarAmount={setDollarsAmount}
+            setPhoneNumber={setPhoneNumber}
+            setPhonePrefix={setPhonePrefix}
+            setSelectedCurrency={setSelectedCurrency}
+          />
           ) : product === '2' ?
           (<View>
             <Text>Opciones de Pospago</Text>
@@ -392,29 +304,6 @@ import AntDesign from '@expo/vector-icons/AntDesign';
     title: {
       color: '#fff',
       fontSize: 16,
-    },
-    confirmationModalTitle: {
-      fontSize: 24, 
-      fontWeight: '600', 
-      marginBottom: 10
-
-    },
-    confirmationModalInfo:{
-      fontSize: 20, 
-      //fontWeight: '500', 
-      marginBottom: 5
-    },
-    confirmationButton: {
-      flexGrow: 1,
-      width: 125,
-      marginTop: 30,
-      //backgroundColor: '#90E0EF',
-      borderRadius: 20,
-      alignItems: 'center', 
-      justifyContent: 'center', 
-      //height: 50,  
-      //padding: 5,
-      padding: 5   
     },
   });
   

@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet, Text } from "react-native";
 import { Children, Dispatch, ReactNode, SetStateAction, useEffect, useState } from "react";
 import OptionCard2 from "./OptionCard2";
 
-export default function OptionsCarousel(props: {children?: ReactNode[] | ReactNode, icons?: ReactNode[],  automatic?: boolean, values?: string[], setValue?: Dispatch<SetStateAction<string>>}) {
+export default function OptionsCarousel(props: {children?: ReactNode[] | ReactNode, icons?: ReactNode[],  automatic?: boolean, values?: string[], setValue?: Dispatch<SetStateAction<string>>, reset: boolean}) {
     const [pressedArray, setPressedArray] = useState([false]);
 
     useEffect(()=>{
@@ -12,6 +12,14 @@ export default function OptionsCarousel(props: {children?: ReactNode[] | ReactNo
             setPressedArray(props.values.map(()=>{return false}))
         }
     },[])
+
+    useEffect(()=>{
+        if(props.reset){
+            if(props.automatic && props.icons && props.values && props.setValue && props.icons.length === props.values.length){
+                setPressedArray(props.values.map(()=>{return false}))
+            }
+        }
+    }, [props.reset])
 
     return(
         <ScrollView style={styles.optionsCarousel} horizontal contentContainerStyle={{}}>

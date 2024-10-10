@@ -26,6 +26,7 @@ type Props = {
     selectedCurrency: string,
     setSelectedCurrency: Dispatch<SetStateAction<string>>,
     resetCarousel: boolean,  
+    phonePrefixPlaceholder: string
 }
 
 export default function PrepaidPhoneForm(props: Props) {
@@ -52,7 +53,7 @@ export default function PrepaidPhoneForm(props: Props) {
                         maxHeight={300}
                         labelField="label"
                         valueField="value"
-                        placeholder={!isPhonePrefixFocus && (props.product === '1' || props.product === '4') ? '0412' : !isPhonePrefixFocus && props.product === '3' ? '0212' : '...'}
+                        placeholder={!isPhonePrefixFocus && (props.product === '1' || props.product === '4') ? props.phonePrefixPlaceholder : !isPhonePrefixFocus && props.product === '3' ? '0212' : '...'}
                         //searchPlaceholder="Search..."
                         value={props.phonePrefix}
                         onFocus={() => setIsPhonePrefixFocus(true)}

@@ -32,7 +32,8 @@ type Props = {
     acceptTransaction: boolean,
     setAcceptTransaction: Dispatch<SetStateAction<boolean>>,
     loadingTransaction: boolean,
-    setLoadingTransaction: Dispatch<SetStateAction<boolean>>
+    setLoadingTransaction: Dispatch<SetStateAction<boolean>>, 
+    operadora: string
 }
 
 export default function TransactionModal(props: Props) {
@@ -97,7 +98,7 @@ export default function TransactionModal(props: Props) {
               <Text style={[styles.confirmationModalTitle]}>¿Seguro?</Text>
               <Text style={{marginBottom: 10}}>Verifica los datos antes de confirmar:</Text>
               <View style={{borderRadius: 20, backgroundColor: 'lightgray', padding: 10}}>
-                <Text style={styles.confirmationModalInfo}>Recarga {props.products.find((element)=> element.value === props.product)?.label} Digitel</Text>
+                <Text style={styles.confirmationModalInfo}>Recarga {props.products.find((element)=> element.value === props.product)?.label} {props.operadora}</Text>
                 <Text style={styles.confirmationModalInfo}>Número: {props.product === '3' ? props.fijoPhonePrefixes.find((element)=> element.value === props.phonePrefix)?.label : props.digitelPhonePrefixes.find((element)=> element.value === props.phonePrefix)?.label}-{props.phoneNumber}</Text>
                 <Text style={styles.confirmationModalInfo}>Monto Bs: {props.BsAmount}</Text>
                 <Text style={styles.confirmationModalInfo}>Monto $: {props.DollarsAmount.toPrecision(3)}</Text>

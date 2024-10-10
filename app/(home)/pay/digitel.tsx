@@ -33,6 +33,7 @@ import TransactionModal from "@/components/TransactionModal";
     const [resetCarousel, setResetCarousel] = useState(false);
     const [Bs2Dollars, setBs2Dollars] = useState(36.82);
     const navigate = useNavigation();
+    const phonePrefixPlaceholder = "0412";
 
     const products=[
       {value: '1', label: 'Móvil Prepago'},
@@ -114,6 +115,7 @@ import TransactionModal from "@/components/TransactionModal";
               setLoadingTransaction={setLoadingTransaction}
               setLockModal={setLockModal}
               success={success}
+              operadora="Digitel"
             />
             <Text style={{fontSize: 18}}>Indique los datos del servicio a pagar</Text>
             <Dropdown
@@ -159,6 +161,7 @@ import TransactionModal from "@/components/TransactionModal";
             setPhoneNumber={setPhoneNumber}
             setPhonePrefix={setPhonePrefix}
             setSelectedCurrency={setSelectedCurrency}
+            phonePrefixPlaceholder={phonePrefixPlaceholder}
           />
           ) : product === '2' ?
           (<View>

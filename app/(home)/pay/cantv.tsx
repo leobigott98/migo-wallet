@@ -6,108 +6,148 @@ import {
   SafeAreaView,
   View,
   Pressable,
-  TextInput
+  TextInput,
 } from "react-native";
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import { Dropdown } from "react-native-element-dropdown";
-import OptionsCarousel from "@/components/OptionsCarousel";
+import { useNavigation } from "expo-router";
+import PrepaidPhoneForm from "@/components/PrepaidPhoneForm";
+import TransactionModal from "@/components/TransactionModal";
+import PostpaidForm from "@/components/PostpaidForm";
 
 export default function CantvScreen() {
   const [isProductFocused, setIsProductFocused] = useState(false);
   const [product, setProduct] = useState('0');
-  const [isDocumentTypeFocus, setIsDocumentTypeFocus] = useState(false);
-  const [isPhonePrefixFocus, setIsPhonePrefixFocus] = useState(false);
-  const [nroContrato, setNroContrato] = useState('')
   const [phonePrefix, setPhonePrefix] = useState('0');
+  const [BsAmount, setBsAmount] = useState('');
+  const [DollarsAmount, setDollarsAmount] = useState(0.00);
+  const [selectedCurrency, setSelectedCurrency] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [acceptTransaction, setAcceptTransaction] = useState(false);
+  const [loadingTransaction, setLoadingTransaction] = useState(false);
+  const [success, setSucess] = useState(false);
+  const [error, setError] = useState(false);
+  const [message, setMessage] = useState('');
+  const [lockModal, setLockModal] = useState(false);
+  const [rechargeValues, setRechargeValues] = useState(['']);
+  const [resetCarousel, setResetCarousel] = useState(false);
+  const [Bs2Dollars, setBs2Dollars] = useState(36.82);
+  const navigate = useNavigation();
+  const phonePrefixPlaceholder = "0412";
+
   const products=[
     {value: '1', label: 'Móvil Prepago'},
     {value: '2', label: 'Móvil Pospago'},
+    {value: '3', label: 'Fija'},
+    {value: '4', label: 'Internet'}
   ]
-  const phonePrefixes = [
-    {label: '0414', value: '1'},
-    {label: '0424', value: '2'},
-    {label: '0412', value: '3'},
-    {label: '0416', value: '4'},
-    {label: '0426', value: '5'},
+  const digitelPhonePrefixes = [
+    {label: '0412', value: '1'},
   ]
+  const fijoPhonePrefixes = [
+    {label: '0212', value: '1'},
+    {label: '0238', value: '2'},
+    {label: '0245', value: '3'},
+    {label: '0267', value: '4'},
+    {label: '0259', value: '5'},
+  ]
+
+  const calculateDollars = ()=>{
+    setDollarsAmount(Number.parseFloat(BsAmount) / Bs2Dollars);
+  }
+
+  useEffect((()=>{
+    calculateDollars()
+  }), [BsAmount])
+
+  useEffect(()=>{
+    if(acceptTransaction){
+      setTimeout(()=>{
+        setLoadingTransaction(false);
+        setAcceptTransaction(false);
+        setSucess(true);
+        setMessage('Su recarga fue realizada.')
+      }, 3000)
+    }
+
+  },[acceptTransaction])
+
+  useEffect(()=>{
+    setPhonePrefix('0');
+    setPhoneNumber('');
+    setResetCarousel(false);
+    setSelectedCurrency('');
+    setBsAmount('');
+  },[product])
+
+  useEffect(()=>{
+    setRechargeValues(['50', '100', '150', '200', '300', '350', '500']);
+    setBs2Dollars(37.5295)
+  },[])
+
+  const showModal = () => setIsModalVisible(true );
+  const hideModal = () => setIsModalVisible(false);
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
-      <Text>Producto</Text>
-      <Dropdown
-            style={[styles.dropdown, {width: 250,}, isProductFocused && { borderColor: 'blue' }]}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
-            data={products}
-            //search
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            placeholder={!isProductFocused ? 'Prepago' : '...'}
-            //searchPlaceholder="Search..."
-            value={product}
-            onFocus={() => setIsProductFocused(true)}
-            onBlur={() => setIsProductFocused(false)}
-            onChange={item => {
-              setProduct(item.value);
-              setIsProductFocused(false);
-            }}
-    />
-      {
-        product === '1' ?
-        (<View>
-          <Text>Opciones de Prepago</Text>
-          <Dropdown
-            style={[styles.dropdown, {width: 100,}, isPhonePrefixFocus && { borderColor: 'blue' }]}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
-            data={phonePrefixes}
-            //search
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            placeholder={!isPhonePrefixFocus ? '0414' : '...'}
-            //searchPlaceholder="Search..."
-            value={phonePrefix}
-            onFocus={() => setIsPhonePrefixFocus(true)}
-            onBlur={() => setIsDocumentTypeFocus(false)}
-            onChange={item => {
-              setPhonePrefix(item.value);
-              setIsPhonePrefixFocus(false);
-            }}
-    />
-          <TextInput style={[{flex: 1}, styles.input]} placeholder="Número de Teléfono" placeholderTextColor='gray' inputMode="numeric"/> 
-          <OptionsCarousel/>
-        </View>
-        ) : product === '2' ?
-        (<View>
-          <Text>Opciones de Pospago</Text>
-          <TextInput style={[{flex: 1}, styles.input]} placeholder="Número de Contrato" placeholderTextColor='gray' inputMode="numeric"/>
-          <Pressable > 
-            {({pressed}) => (
-              <View style={[pressed? {backgroundColor: '#048EA9'} : {backgroundColor: '#00B4D8'}, styles.rechargeButton]}>
-                <Text style={{color: 'white', fontSize: 14, fontWeight: 'bold'}}>Consultar</Text>
-              </View>
-          )}
-        </Pressable>
-        </View>) : <></>
-      }
-
+        <View style={{alignItems: 'center'}}>
+          <TransactionModal
+            BsAmount={BsAmount}
+            DollarsAmount={DollarsAmount}
+            acceptTransaction={acceptTransaction}
+            digitelPhonePrefixes={digitelPhonePrefixes}
+            error={error}
+            fijoPhonePrefix={phonePrefix}
+            fijoPhonePrefixes={fijoPhonePrefixes}
+            hideModal={hideModal}
+            isModalVisible={isModalVisible}
+            loadingTransaction={loadingTransaction}
+            lockModal={lockModal}
+            message={message}
+            navigate={navigate}
+            phoneNumber={phoneNumber}
+            phonePrefix={phonePrefix}
+            product={product}
+            products={products}
+            selectedCurrency={selectedCurrency}
+            setAcceptTransaction={setAcceptTransaction}
+            setLoadingTransaction={setLoadingTransaction}
+            setLockModal={setLockModal}
+            success={success}
+            operadora="Digitel"
+          />
+        </View>          
+          <PostpaidForm
+          bsAmount={BsAmount}
+          conversionRate={Bs2Dollars}
+          dollarsAmount={DollarsAmount}
+          fijoPhonePrefixes={fijoPhonePrefixes}
+          phoneNumber={phoneNumber}
+          phonePrefix={phonePrefix}
+          phonePrefixes={digitelPhonePrefixes}
+          product={product}
+          rechargeValues={rechargeValues}
+          resetCarousel={resetCarousel}
+          selectedCurrency={selectedCurrency}
+          setBsAmount={setBsAmount}
+          setDollarAmount={setDollarsAmount}
+          setPhoneNumber={setPhoneNumber}
+          setPhonePrefix={setPhonePrefix}
+          setSelectedCurrency={setSelectedCurrency}
+          phonePrefixPlaceholder={phonePrefixPlaceholder}
+        />
       </ScrollView>
       <View style={{position: 'relative', marginTop: 'auto'}}>
-        <Pressable > 
+        <Pressable onPress={showModal} disabled={selectedCurrency !== '' && BsAmount !== '' && phonePrefix !== '0' && phoneNumber !== '' && product !== '' ? false : true}> 
             {({pressed}) => (
-              <View style={[pressed? {backgroundColor: '#048EA9'} : {backgroundColor: '#00B4D8'}, styles.rechargeButton]}>
+              <View style={[selectedCurrency !== '' && BsAmount !== '' && phonePrefix !== '0' && phoneNumber !== '' && product !== '' ? pressed? {backgroundColor: '#048EA9'} : {backgroundColor: '#00B4D8'} : {backgroundColor: 'lightgray'} , styles.rechargeButton]}>
                 <Text style={{color: 'white', fontSize: 14, fontWeight: 'bold'}}>Pagar</Text>
               </View>
           )}
         </Pressable>
-        <Pressable > 
+        <Pressable onPress={()=> navigate.goBack() }> 
             {({pressed}) => (
               <View style={[pressed? {backgroundColor: 'lightgray'} : {backgroundColor: 'white'}, styles.cancelButtom]}>
                 <Text style={{fontSize: 14, color: 'black'}}>Cancelar</Text>
@@ -205,5 +245,28 @@ const styles = StyleSheet.create({
     //borderRadius: 20, 
     borderColor: 'lightgray',
     //backgroundColor: 'white'
+  },
+  modalContent: {
+    height: '25%',
+    width: '100%',
+    backgroundColor: '#25292e',
+    borderTopRightRadius: 18,
+    borderTopLeftRadius: 18,
+    position: 'absolute',
+    bottom: 0,
+  },
+  titleContainer: {
+    height: '16%',
+    backgroundColor: '#464C55',
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    paddingHorizontal: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  title: {
+    color: '#fff',
+    fontSize: 16,
   },
 });

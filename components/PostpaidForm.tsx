@@ -32,6 +32,7 @@ type Props = {
 export default function PostpaidForm(props: Props) {
     const [isDocumentTypeFocus, setIsDocumentTypeFocus] = useState(false);
     const [isPhonePrefixFocus, setIsPhonePrefixFocus] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     
     return(
         <>

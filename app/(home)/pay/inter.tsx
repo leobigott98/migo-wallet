@@ -9,14 +9,11 @@ import {
   TextInput,
 } from "react-native";
 import {useState, useEffect} from 'react';
-import { Dropdown } from "react-native-element-dropdown";
 import { useNavigation } from "expo-router";
-import PrepaidPhoneForm from "@/components/PrepaidPhoneForm";
 import TransactionModal from "@/components/TransactionModal";
 import PostpaidForm from "@/components/PostpaidForm";
 
 export default function InterScreen() {
-  const [isProductFocused, setIsProductFocused] = useState(false);
   const [product, setProduct] = useState('0');
   const [phonePrefix, setPhonePrefix] = useState('0');
   const [BsAmount, setBsAmount] = useState('');
@@ -30,28 +27,8 @@ export default function InterScreen() {
   const [error, setError] = useState(false);
   const [message, setMessage] = useState('');
   const [lockModal, setLockModal] = useState(false);
-  const [rechargeValues, setRechargeValues] = useState(['']);
-  const [resetCarousel, setResetCarousel] = useState(false);
   const [Bs2Dollars, setBs2Dollars] = useState(36.82);
   const navigate = useNavigation();
-  const phonePrefixPlaceholder = "0412";
-
-  const products=[
-    {value: '1', label: 'Móvil Prepago'},
-    {value: '2', label: 'Móvil Pospago'},
-    {value: '3', label: 'Fija'},
-    {value: '4', label: 'Internet'}
-  ]
-  const digitelPhonePrefixes = [
-    {label: '0412', value: '1'},
-  ]
-  const fijoPhonePrefixes = [
-    {label: '0212', value: '1'},
-    {label: '0238', value: '2'},
-    {label: '0245', value: '3'},
-    {label: '0267', value: '4'},
-    {label: '0259', value: '5'},
-  ]
 
   const calculateDollars = ()=>{
     setDollarsAmount(Number.parseFloat(BsAmount) / Bs2Dollars);
@@ -76,13 +53,11 @@ export default function InterScreen() {
   useEffect(()=>{
     setPhonePrefix('0');
     setPhoneNumber('');
-    setResetCarousel(false);
     setSelectedCurrency('');
     setBsAmount('');
   },[product])
 
   useEffect(()=>{
-    setRechargeValues(['50', '100', '150', '200', '300', '350', '500']);
     setBs2Dollars(37.5295)
   },[])
 
@@ -93,14 +68,11 @@ export default function InterScreen() {
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={{alignItems: 'center'}}>
-          <TransactionModal
+        <TransactionModal
             BsAmount={BsAmount}
             DollarsAmount={DollarsAmount}
             acceptTransaction={acceptTransaction}
-            phonePrefixes={digitelPhonePrefixes}
             error={error}
-            fijoPhonePrefix={phonePrefix}
-            fijoPhonePrefixes={fijoPhonePrefixes}
             hideModal={hideModal}
             isModalVisible={isModalVisible}
             loadingTransaction={loadingTransaction}
@@ -108,41 +80,32 @@ export default function InterScreen() {
             message={message}
             navigate={navigate}
             phoneNumber={phoneNumber}
-            phonePrefix={phonePrefix}
             product={product}
-            products={products}
             selectedCurrency={selectedCurrency}
             setAcceptTransaction={setAcceptTransaction}
             setLoadingTransaction={setLoadingTransaction}
             setLockModal={setLockModal}
             success={success}
-            operadora="Digitel"
+            operadora="Inter"
           />
         </View>          
-          <PostpaidForm
+        <PostpaidForm
           bsAmount={BsAmount}
           conversionRate={Bs2Dollars}
           dollarsAmount={DollarsAmount}
-          fijoPhonePrefixes={fijoPhonePrefixes}
           phoneNumber={phoneNumber}
-          phonePrefix={phonePrefix}
-          phonePrefixes={digitelPhonePrefixes}
           product={product}
-          rechargeValues={rechargeValues}
-          resetCarousel={resetCarousel}
           selectedCurrency={selectedCurrency}
           setBsAmount={setBsAmount}
           setDollarAmount={setDollarsAmount}
           setPhoneNumber={setPhoneNumber}
-          setPhonePrefix={setPhonePrefix}
           setSelectedCurrency={setSelectedCurrency}
-          phonePrefixPlaceholder={phonePrefixPlaceholder}
         />
       </ScrollView>
       <View style={{position: 'relative', marginTop: 'auto'}}>
-        <Pressable onPress={showModal} disabled={selectedCurrency !== '' && BsAmount !== '' && phonePrefix !== '0' && phoneNumber !== '' && product !== '' ? false : true}> 
+        <Pressable onPress={showModal} disabled={selectedCurrency !== '' && BsAmount !== '' && phonePrefix !== '0' && phoneNumber !== '' ? false : true}> 
             {({pressed}) => (
-              <View style={[selectedCurrency !== '' && BsAmount !== '' && phonePrefix !== '0' && phoneNumber !== '' && product !== '' ? pressed? {backgroundColor: '#048EA9'} : {backgroundColor: '#00B4D8'} : {backgroundColor: 'lightgray'} , styles.rechargeButton]}>
+              <View style={[selectedCurrency !== '' && BsAmount !== '' && phonePrefix !== '0' && phoneNumber !== '' ? pressed? {backgroundColor: '#048EA9'} : {backgroundColor: '#00B4D8'} : {backgroundColor: 'lightgray'} , styles.rechargeButton]}>
                 <Text style={{color: 'white', fontSize: 14, fontWeight: 'bold'}}>Pagar</Text>
               </View>
           )}

@@ -25,7 +25,7 @@ type Props = {
     DollarsAmount: number,
     phonePrefix?: string,
     fijoPhonePrefix?: string,
-    products: Options[],
+    products?: Options[],
     fijoPhonePrefixes?: Options[],
     phonePrefixes?: Options[],
     phoneNumber: string,
@@ -98,8 +98,8 @@ export default function TransactionModal(props: Props) {
               <Text style={[styles.confirmationModalTitle]}>¿Seguro?</Text>
               <Text style={{marginBottom: 10}}>Verifica los datos antes de confirmar:</Text>
               <View style={{borderRadius: 20, backgroundColor: 'lightgray', padding: 10}}>
-                <Text style={styles.confirmationModalInfo}>Recarga {props.products.find((element)=> element.value === props.product)?.label} {props.operadora}</Text>
-                <Text style={styles.confirmationModalInfo}>{props.product === '3' ? 'Número: ' + props.fijoPhonePrefixes?.find((element)=> element.value === props.phonePrefix)?.label : props.product === '2'? 'Contrato: ' : 'Número: ' + props.phonePrefixes?.find((element)=> element.value === props.phonePrefix)?.label + '-'}{props.phoneNumber}</Text>
+                <Text style={styles.confirmationModalInfo}>Recarga {props.products?.find((element)=> element.value === props.product)?.label} {props.operadora}</Text>
+                <Text style={styles.confirmationModalInfo}>{props.product === '3' ? 'Número: ' + props.fijoPhonePrefixes?.find((element)=> element.value === props.phonePrefix)?.label : props.product === '2' || props.product === '0' ? 'Contrato: ' : 'Número: ' + props.phonePrefixes?.find((element)=> element.value === props.phonePrefix)?.label + '-'}{props.phoneNumber}</Text>
                 <Text style={styles.confirmationModalInfo}>Monto Bs: {props.BsAmount}</Text>
                 <Text style={styles.confirmationModalInfo}>Monto $: {props.DollarsAmount.toPrecision(3)}</Text>
                 <Text style={styles.confirmationModalInfo}>Wallet: {props.selectedCurrency} Wallet</Text>

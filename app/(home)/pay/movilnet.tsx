@@ -13,6 +13,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import { useNavigation } from "expo-router";
 import PrepaidPhoneForm from "@/components/PrepaidPhoneForm";
 import TransactionModal from "@/components/TransactionModal";
+import PostpaidForm from "@/components/PostpaidForm";
 
 export default function MovilnetScreen() {
   const [isProductFocused, setIsProductFocused] = useState(false);
@@ -162,17 +163,18 @@ export default function MovilnetScreen() {
           phonePrefixPlaceholder={phonePrefixPlaceholder}
         />
         ) : product === '2' ?
-        (<View>
-          <Text>Opciones de Pospago</Text>
-          <TextInput style={[{flex: 1}, styles.input]} placeholder="Número de Contrato" placeholderTextColor='gray' inputMode="numeric"/>
-          <Pressable > 
-            {({pressed}) => (
-              <View style={[pressed? {backgroundColor: '#048EA9'} : {backgroundColor: '#00B4D8'}, styles.rechargeButton]}>
-                <Text style={{color: 'white', fontSize: 14, fontWeight: 'bold'}}>Consultar</Text>
-              </View>
-          )}
-        </Pressable>
-        </View>) : <></>
+        (<PostpaidForm
+          bsAmount={BsAmount}
+          conversionRate={Bs2Dollars}
+          dollarsAmount={DollarsAmount}
+          phoneNumber={phoneNumber}
+          product={product}
+          selectedCurrency={selectedCurrency}
+          setBsAmount={setBsAmount}
+          setDollarAmount={setDollarsAmount}
+          setPhoneNumber={setPhoneNumber}
+          setSelectedCurrency={setSelectedCurrency}
+        />) : <></>
       } 
       
       </ScrollView>

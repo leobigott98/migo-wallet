@@ -94,7 +94,7 @@ export default function MovilnetScreen() {
             BsAmount={BsAmount}
             DollarsAmount={DollarsAmount}
             acceptTransaction={acceptTransaction}
-            digitelPhonePrefixes={movilnetPhonePrefixes}
+            phonePrefixes={movilnetPhonePrefixes}
             error={error}
             fijoPhonePrefix={phonePrefix}
             fijoPhonePrefixes={fijoPhonePrefixes}

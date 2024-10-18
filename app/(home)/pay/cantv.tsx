@@ -97,7 +97,7 @@ export default function CantvScreen() {
             BsAmount={BsAmount}
             DollarsAmount={DollarsAmount}
             acceptTransaction={acceptTransaction}
-            digitelPhonePrefixes={digitelPhonePrefixes}
+            phonePrefixes={digitelPhonePrefixes}
             error={error}
             fijoPhonePrefix={phonePrefix}
             fijoPhonePrefixes={fijoPhonePrefixes}

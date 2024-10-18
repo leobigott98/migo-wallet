@@ -97,7 +97,7 @@ import PostpaidForm from "@/components/PostpaidForm";
               BsAmount={BsAmount}
               DollarsAmount={DollarsAmount}
               acceptTransaction={acceptTransaction}
-              digitelPhonePrefixes={digitelPhonePrefixes}
+              phonePrefixes={digitelPhonePrefixes}
               error={error}
               fijoPhonePrefix={phonePrefix}
               fijoPhonePrefixes={fijoPhonePrefixes}
@@ -171,20 +171,13 @@ import PostpaidForm from "@/components/PostpaidForm";
             bsAmount={BsAmount}
             conversionRate={Bs2Dollars}
             dollarsAmount={DollarsAmount}
-            fijoPhonePrefixes={fijoPhonePrefixes}
             phoneNumber={phoneNumber}
-            phonePrefix={phonePrefix}
-            phonePrefixes={digitelPhonePrefixes}
             product={product}
-            rechargeValues={rechargeValues}
-            resetCarousel={resetCarousel}
             selectedCurrency={selectedCurrency}
             setBsAmount={setBsAmount}
             setDollarAmount={setDollarsAmount}
             setPhoneNumber={setPhoneNumber}
-            setPhonePrefix={setPhonePrefix}
             setSelectedCurrency={setSelectedCurrency}
-            phonePrefixPlaceholder={phonePrefixPlaceholder}
           />
           </>
         ) : <></>
@@ -192,9 +185,19 @@ import PostpaidForm from "@/components/PostpaidForm";
         
         </ScrollView>
         <View style={{position: 'relative', marginTop: 'auto'}}>
-          <Pressable onPress={showModal} disabled={selectedCurrency !== '' && BsAmount !== '' && phonePrefix !== '0' && phoneNumber !== '' && product !== '' ? false : true}> 
+          <Pressable onPress={showModal} disabled={selectedCurrency !== '' && BsAmount !== '' && phoneNumber !== '' ? phonePrefix !== '0' && product !== '' && product !== '2'  ? false : product === '2' ? false : true: true}> 
               {({pressed}) => (
-                <View style={[selectedCurrency !== '' && BsAmount !== '' && phonePrefix !== '0' && phoneNumber !== '' && product !== '' ? pressed? {backgroundColor: '#048EA9'} : {backgroundColor: '#00B4D8'} : {backgroundColor: 'lightgray'} , styles.rechargeButton]}>
+                <View style={
+                  [selectedCurrency !== '' && BsAmount !== '' && phoneNumber !== '' ? 
+                  phonePrefix !== '0' && product !== '' && product !== '2' ? 
+                  pressed? styles.pressedRechargeButton : 
+                  styles.rechargeButton : 
+                  product === '2' ? 
+                  pressed? styles.pressedRechargeButton : 
+                  styles.rechargeButton :
+                  styles.disabledRechargeButton :
+                  styles.disabledRechargeButton ]
+                  }>
                   <Text style={{color: 'white', fontSize: 14, fontWeight: 'bold'}}>Pagar</Text>
                 </View>
             )}
@@ -267,13 +270,35 @@ import PostpaidForm from "@/components/PostpaidForm";
     rechargeButton: {
       display: 'flex',
       width: 300,
-      //backgroundColor: '#90E0EF',
+      backgroundColor: '#00B4D8',
       borderRadius: 20,
       alignItems: 'center', 
       justifyContent: 'center', 
       height: 50,  
       padding: 5,
       margin: 5   
+    },
+    pressedRechargeButton: {
+      display: 'flex',
+      width: 300,
+      backgroundColor: '#048EA9',
+      borderRadius: 20,
+      alignItems: 'center', 
+      justifyContent: 'center', 
+      height: 50,  
+      padding: 5,
+      margin: 5   
+    },
+    disabledRechargeButton: {
+      display: 'flex',
+      width: 300,
+      backgroundColor: 'lightgray',
+      borderRadius: 20,
+      alignItems: 'center', 
+      justifyContent: 'center', 
+      height: 50,  
+      padding: 5,
+      margin: 5 
     },
     cancelButtom: {
       display: 'flex',

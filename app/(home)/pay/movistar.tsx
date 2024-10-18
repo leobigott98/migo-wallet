@@ -98,7 +98,7 @@ export default function MovistarScreen() {
             BsAmount={BsAmount}
             DollarsAmount={DollarsAmount}
             acceptTransaction={acceptTransaction}
-            digitelPhonePrefixes={movistarPhonePrefixes}
+            phonePrefixes={movistarPhonePrefixes}
             error={error}
             fijoPhonePrefix={phonePrefix}
             fijoPhonePrefixes={fijoPhonePrefixes}

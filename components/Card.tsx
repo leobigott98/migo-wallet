@@ -15,7 +15,7 @@ type Props = {
 
 export default function Card({width, currency, colors}: Props){
     return(
-        <View style={[{width: width}, styles.card]}>
+        <View style={[{width: width, height: width*0.6}, styles.card]}>
           <LinearGradient
             colors={colors}
             start={[0, 0]}
@@ -23,17 +23,36 @@ export default function Card({width, currency, colors}: Props){
             style={styles.linearGradient}
           >
             <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.migo}>{currency} Wallet</Text>
-            <Image source={require('@/assets/images/logo_migo.png')} style={styles.chipImage}/>
+           
+            {
+              width > 250? 
+              <>
+                <Text style={styles.migo}>{currency} Wallet</Text>
+                <Image source={require('@/assets/images/logo_migo.png')} style={styles.chipImage}/> 
+              </>
+              : 
+              <>
+                <Text style={{marginBottom: 'auto', marginHorizontal: 'auto', marginTop: 7, fontWeight: 'bold'}}>{currency} Wallet</Text>
+              </>
+            }
             </View> 
-          <Text style={styles.cardBearer}>$185,00</Text>
-          <View style={styles.amountAvailable}>
-            <Text style={styles.amountText}>Disponible</Text>
-            <View style={styles.amount}>
-              <Text style={styles.amountNumber}>$185,</Text>
-              <Text style={styles.amountCents}>00</Text>
-            </View>
-          </View>
+            {width > 250? 
+            <>
+            <Text style={styles.cardBearer}>$185,00</Text>
+            <View style={styles.amountAvailable}>
+              <Text style={styles.amountText}>Disponible</Text>
+              <View style={styles.amount}>
+                <Text style={styles.amountNumber}>$185,</Text>
+                <Text style={styles.amountCents}>00</Text>
+              </View>
+            </View> 
+            </>
+            : 
+            <>
+            <Text style={{marginTop: 'auto', marginHorizontal: 'auto', fontSize: 18, color: 'white'}}>$185,00</Text>
+            </>
+            }
+          
           </LinearGradient>
           
         </View>
@@ -43,7 +62,6 @@ export default function Card({width, currency, colors}: Props){
 const styles = StyleSheet.create({
     card: {
       //justifyContent: 'center',
-      height: 210,
       //alignItems: 'center', 
       //margin: 10,  
       shadowColor: "#000000",
@@ -53,12 +71,12 @@ const styles = StyleSheet.create({
       },
       shadowOpacity: 0.25,
       shadowRadius: 10,
+      borderRadius: 20
     },
     linearGradient: {
       width: '100%',
       height: '100%',
       padding: 10,
-      //backgroundColor: "#00B4D8",
       borderRadius: 20, 
     },
     migo: {

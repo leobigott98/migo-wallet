@@ -37,7 +37,7 @@ export default function CardsCarousel() {
                             alignItems: 'center',
                         }}
                     >
-                        <Card width={350} colors={colors[index]} currency={currencies[index]}/>
+                        <Card width={width*0.95} colors={colors[index]} currency={currencies[index]}/>
                     </View>     
                 )}
             />

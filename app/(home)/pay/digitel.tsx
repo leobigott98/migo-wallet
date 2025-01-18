@@ -14,6 +14,7 @@ import { useNavigation } from "expo-router";
 import PrepaidPhoneForm from "@/components/PrepaidPhoneForm";
 import TransactionModal from "@/components/TransactionModal";
 import PostpaidForm from "@/components/PostpaidForm";
+import React from "react";
   
   export default function DigitelScreen() {
     const [isProductFocused, setIsProductFocused] = useState(false);
@@ -106,7 +107,7 @@ import PostpaidForm from "@/components/PostpaidForm";
               loadingTransaction={loadingTransaction}
               lockModal={lockModal}
               message={message}
-              navigate={navigate}
+              //navigate={navigate}
               phoneNumber={phoneNumber}
               phonePrefix={phonePrefix}
               product={product}

@@ -1,5 +1,5 @@
 import { Children, ReactNode, useState } from "react";
-import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming} from "react-native-reanimated";
+import Animated, { useAnimatedStyle, withTiming} from "react-native-reanimated";
 import { Href } from "expo-router";
 import {
     Text,
@@ -9,31 +9,19 @@ import {
 
   export default function DropdownMenu ( props: { name: string, children?: ReactNode[] | ReactNode, height?: number} ){
     const [isOpen, setIsOpen] = useState(false)
-    const height = useSharedValue(60);
-    const opacity = useSharedValue(0);
     const nChildren = Children.count(props.children)
 
-    const animatedStyles = useAnimatedStyle(()=>{
-      if(isOpen){
-          return {
-          height: withTiming(height.value + height.value * nChildren)
-        }
-      } else return { 
-        height: withTiming(height.value)
-      }
-    })
+    const animatedStyles = useAnimatedStyle(() => {
+      return {
+          height: withTiming(isOpen ? 60 + 60 * nChildren : 60),
+      };
+  });
 
-    const animatedDisplay = useAnimatedStyle(()=>{
-      if(isOpen){
-        return{
-          opacity: withTiming(opacity.value + 1)
-        }
-      }else{
-        return{
-          opacity: withTiming(opacity.value - 1)
-        }
-      }
-    })
+  const animatedDisplay = useAnimatedStyle(() => {
+    return {
+        opacity: withTiming(isOpen ? 1 : 0),
+    };
+});
 
     return(
       <Animated.View style={[animatedStyles, styles.rechargeOption]}>

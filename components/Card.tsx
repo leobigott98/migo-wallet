@@ -6,6 +6,7 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Dimensions } from "react-native";
+import React from "react";
 
 type Props = {
     width: number,

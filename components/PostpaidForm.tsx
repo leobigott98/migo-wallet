@@ -1,6 +1,7 @@
 import { Text, View, StyleSheet, TextInput, Pressable, ActivityIndicator } from 'react-native';
 import { useState, Dispatch, SetStateAction } from 'react';
 import WalletChooser from './WalletChooser';
+import React from 'react';
 
 type Options = {
     label: string

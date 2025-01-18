@@ -4,6 +4,8 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { NavigationProp } from "@react-navigation/native";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Feather from '@expo/vector-icons/Feather';
+import { useNavigation } from "expo-router";
+import React from "react";
 
 type Options = {
     label: string
@@ -17,7 +19,7 @@ type Props = {
     setLockModal: Dispatch<SetStateAction<boolean>>,
     error: boolean,
     success: boolean,
-    navigate: NavigationProp<ReactNavigation.RootParamList>,
+    //navigate: NavigationProp<ReactNavigation.RootParamList>,
     selectedCurrency: string,
     message: string,
     product: string,
@@ -37,6 +39,7 @@ type Props = {
 }
 
 export default function TransactionModal(props: Props) {
+  const navigate = useNavigation();
 
     const loadTransaction =()=>{
         props.setAcceptTransaction(true);
@@ -66,7 +69,7 @@ export default function TransactionModal(props: Props) {
               <Pressable onPress={()=>{
                 props.hideModal
                 props.setLockModal(false);
-                props.navigate.goBack()}} > 
+                navigate.goBack()}} > 
                     {({pressed}) => (
                       <View style={[pressed? {backgroundColor: 'lightgray', borderColor: 'lightgray', borderWidth: 1, borderRadius: 20, padding: 10, width: 100, justifyContent: 'center', alignItems: 'center'} : {backgroundColor: 'white', borderColor: 'lightgray', borderWidth: 1, borderRadius: 20, padding: 10, width: 100, justifyContent: 'center', alignItems: 'center'}]}>
                         <Text style={{fontSize: 18, color: 'black'}}>Aceptar</Text>
@@ -83,7 +86,7 @@ export default function TransactionModal(props: Props) {
               <Pressable onPress={()=>{
                 props.hideModal
                 props.setLockModal(false);
-                props.navigate.goBack();
+                navigate.goBack();
                 }} > 
                     {({pressed}) => (
                       <View style={[pressed? {backgroundColor: 'lightgray', borderColor: 'lightgray', borderWidth: 1, borderRadius: 20, padding: 10, width: 100, justifyContent: 'center', alignItems: 'center'} : {backgroundColor: 'white', borderColor: 'lightgray', borderWidth: 1, borderRadius: 20, padding: 10, width: 100, justifyContent: 'center', alignItems: 'center'}]}>

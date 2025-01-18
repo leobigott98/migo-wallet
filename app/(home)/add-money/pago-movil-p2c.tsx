@@ -12,7 +12,8 @@ import {
 import {useEffect, useState} from 'react'
 import { Dropdown } from "react-native-element-dropdown";
 import {Calendar, DateData} from 'react-native-calendars';
-import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming} from "react-native-reanimated";
+import Animated, { useAnimatedStyle, withTiming} from "react-native-reanimated";
+import React from "react";
 
 export default function PagoMovilP2CScreen() {
   const [BsAmount, setBsAmount] = useState('');
@@ -25,7 +26,6 @@ export default function PagoMovilP2CScreen() {
   const [isDocumentTypeFocus, setIsDocumentTypeFocus] = useState(false);
   const [isPhonePrefixFocus, setIsPhonePrefixFocus] = useState(false);
   const [isOpen, setIsOpen] = useState(false)
-  const height = useSharedValue(30);
   const Bs2Dollars = 36.82;
   const documetTypes = [
     {label: 'V', value: '1'},
@@ -56,12 +56,8 @@ export default function PagoMovilP2CScreen() {
   }), [BsAmount])
 
   const animatedStyles = useAnimatedStyle(()=>{
-    if(isOpen){
-        return {
-        height: withTiming(height.value + 350)
-      }
-    } else return { 
-      height: withTiming(height.value)
+    return{
+      height: withTiming(isOpen? 30 + 350: 30)
     }
   })
 

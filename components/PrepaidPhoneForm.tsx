@@ -3,6 +3,8 @@ import OptionsCarousel from './OptionsCarousel';
 import { Dropdown } from 'react-native-element-dropdown';
 import { useState, Dispatch, SetStateAction } from 'react';
 import WalletChooser from './WalletChooser';
+import React from 'react';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 type Options = {
     label: string
@@ -32,6 +34,12 @@ type Props = {
 export default function PrepaidPhoneForm(props: Props) {
     const [isDocumentTypeFocus, setIsDocumentTypeFocus] = useState(false);
     const [isPhonePrefixFocus, setIsPhonePrefixFocus] = useState(false);
+    const [openPhonePrefix, setOpenPhonePrefix] = useState(false);
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState([
+      {label: 'Apple', value: 'apple'},
+      {label: 'Banana', value: 'banana'}
+    ]);
     
     return(
         <>
@@ -42,8 +50,20 @@ export default function PrepaidPhoneForm(props: Props) {
                 margin: 5, 
                 //borderRadius: 20,  
                 width: 350,}}>
-                <View style={{display: 'flex', flexDirection: "row", margin: 0}}> 
-                    <Dropdown
+                <View style={{display: 'flex', flexDirection: "row", margin: 0}}>
+                  <DropDownPicker
+                    open={openPhonePrefix}
+                    value={props.phonePrefix}
+                    items={props.product === '3'? props.fijoPhonePrefixes : props.phonePrefixes}
+                    setOpen={setOpenPhonePrefix}
+                    setValue={props.setPhonePrefix}
+                    maxHeight={300}
+                    listMode='SCROLLVIEW'
+                    style={[styles.dropdown, {width: 100,}, isPhonePrefixFocus && { borderColor: 'blue' }]}
+                    //containerStyle={[styles.dropdown, {width: 100,}, isPhonePrefixFocus && { borderColor: 'blue' }]}
+                    onPress={() => setIsPhonePrefixFocus(true)}
+                    /> 
+                    {/* <Dropdown
                         style={[styles.dropdown, {width: 100,}, isPhonePrefixFocus && { borderColor: 'blue' }]}
                         placeholderStyle={styles.placeholderStyle}
                         selectedTextStyle={styles.selectedTextStyle}
@@ -62,7 +82,7 @@ export default function PrepaidPhoneForm(props: Props) {
                         props.setPhonePrefix(item.value);
                         setIsPhonePrefixFocus(false);
                         }}
-                    />
+                    /> */}
                     <TextInput style={[{flex: 1}, styles.input]} placeholder="Número de Teléfono" placeholderTextColor='gray' inputMode="numeric" onChangeText={props.setPhoneNumber} value={props.phoneNumber} />
                 </View>
             </View>

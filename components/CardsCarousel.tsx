@@ -6,6 +6,7 @@ import Animated, {
     interpolate,
     Extrapolate,
     runOnJS,
+    Extrapolation,
 } from 'react-native-reanimated';
 import Carousel from 'react-native-reanimated-carousel';
 import Card from './Card';
@@ -22,14 +23,24 @@ const CardsCarousel: React.FC = () => {
 
     const currencies: string[] = ['USD', 'BS', 'CrediExpress'];
 
-    const getAnimatedStyle = (index: number) =>
+    const getAnimatedStyle = (index: number, totalCards: number) =>
         useAnimatedStyle(() => {
+            const wrapAroundProgress = (progress: number, totalCards: number) => {
+                return progress >= totalCards - 1
+                    ? interpolate(progress, [totalCards - 1, totalCards], [totalCards - 1, 0], Extrapolation.CLAMP)
+                    : progress;
+            };
+    
             const scale = interpolate(
-                progress.value,
-                [index - 1, index, index + 1],
-                [0.9, 1, 0.9],
-                Extrapolate.CLAMP
-            );
+                wrapAroundProgress(progress.value, totalCards),
+                [
+                    index - 1,
+                    index,
+                    index + 1
+                ],
+                [0.8, 1, 0.8],
+                Extrapolation.EXTEND
+            );            
 
             return {
                 transform: [{ scale }],
@@ -44,13 +55,12 @@ const CardsCarousel: React.FC = () => {
                 height={width * 0.55}
                 autoPlay={false}
                 data={[0, 1, 2]}
+                defaultIndex={0}
                 onProgressChange={(offsetProgress, absoluteProgress) => {
-                    runOnJS(() => {
-                        progress.value = absoluteProgress;
-                    })();
+                    progress.value = absoluteProgress;
                 }}
                 renderItem={({ index }: { index: number }) => {
-                    const animatedStyle = getAnimatedStyle(index);
+                    const animatedStyle = getAnimatedStyle(index, colors.length);
 
                     return (
                         <Animated.View

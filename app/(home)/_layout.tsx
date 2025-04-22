@@ -1,8 +1,19 @@
-import { Stack } from 'expo-router';
-import { View, Image } from 'react-native';
+import { View, Image, Text } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { Redirect, Stack } from 'expo-router';
+import { useAuth } from '@/context/AuthContext';
 
 export default function HomeLayout() {
+  const auth = useAuth();
+
+  if(auth?.loading){
+    return <Text>Loading...</Text>;
+  }
+
+  if(!auth?.isAuthenticated){
+    return <Redirect href="/sign-in"/>;
+  }
+
   return (
     <Stack
       screenOptions={{

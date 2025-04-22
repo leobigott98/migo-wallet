@@ -134,7 +134,7 @@ export default function SignInScreen() {
               <Text style={{ marginBottom: 10, marginHorizontal: "auto" }}>
                 ¿Ya tienes cuenta?
               </Text>
-              <Link href={"/auth"} 
+              <Link href={"/sign-in"} 
                 asChild
                 >
                 <Pressable

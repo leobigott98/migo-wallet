@@ -16,13 +16,16 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import OptionCard from "@/components/OptionCard";
+import { useAuth } from "@/context/AuthContext";
 
 export default function HomeScreen() {
+  const auth = useAuth();
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>  
         <Text style={{fontSize: 24, fontWeight: '600', position: 'relative', right: 80, margin: 10 }}>Hola Leonardo,</Text>
+        <Text onPress={()=>{auth?.logout()}}>Sign Out</Text>
         <CardsCarousel/>       
         
         <Text style={{position: 'relative', right: 120, fontSize: 20, fontWeight: '500', marginTop: 5}}>Opciones</Text>
@@ -69,7 +72,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     //marginHorizontal: 10,
-    //backgroundColor: 'pink',
+    //backgroundColor: 'white',
   },
   optionsBar: {
     position: "absolute",

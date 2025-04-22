@@ -1,31 +1,30 @@
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import * as React from "react";
 import {
   View,
   TextInput,
-  Button,
   Text,
-  SafeAreaView,
-  Dimensions,
   StyleSheet,
-  StatusBar,
   ScrollView,
   Image,
   Pressable,
 } from "react-native";
-import { useTheme } from "react-native-paper";
-import { useSignIn } from "@/hooks/useSignIn";
+//import { useSignIn } from "@/hooks/useSignIn";
+import { useAuth } from "@/context/AuthContext";
 
 export default function SignInScreen() {
   const [password, setPassword] = React.useState("");
   const [email, setEmail] = React.useState("");
-  const mutation = useSignIn();
+  const auth = useAuth();
+  //const mutation = useSignIn();
 
-  const handleSignIn = () => {
-    mutation.mutate({
+  const handleSignIn = async () => {
+    await auth?.login(email.toLowerCase(), password)
+    router.replace('/(home)');
+    /* mutation.mutate({
       password,
       email: email.toLowerCase(),
-    });
+    }); */
   };
 
   //const { signIn } = React.useContext(AuthContext);
@@ -87,17 +86,17 @@ export default function SignInScreen() {
               padding: 15,
               alignItems: "center",
             }}
-            disabled={mutation.isPending}
+            disabled={auth?.loading}
             onPress={handleSignIn}
           >
             <Text style={{ color: "black", fontSize: 16 }}>
-              {mutation.isPending ? "Procesando..." : "Iniciar Sesión"}
+              {auth?.loading ? "Procesando..." : "Iniciar Sesión"}
             </Text>
           </Pressable>
           <Text style={{ marginBottom: 10, marginHorizontal: "auto" }}>
             ¿No tienes cuenta?
           </Text>
-          <Link href={"/auth/sign-up"} asChild>
+          <Link href={"/sign-up"} asChild>
             <Pressable
               style={{
                 backgroundColor: "#004aad",
@@ -110,7 +109,7 @@ export default function SignInScreen() {
               <Text style={{ color: "white", fontSize: 16 }}>Regístrate</Text>
             </Pressable>
           </Link>
-          <Link href={"/auth/forgot-password"} asChild>
+          <Link href={"/forgot-password"} asChild>
             <Pressable
               style={{
                 //backgroundColor: "#004aad",
@@ -174,6 +173,7 @@ const styles = StyleSheet.create({
     //alignItems: "center",
     //marginHorizontal: 10,
     //backgroundColor: 'pink',
+    //backgroundColor: 'white',
     paddingBottom: 50,
     width: "100%",
     height: "100%",

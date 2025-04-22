@@ -14,15 +14,16 @@ import {
   Pressable,
 } from "react-native";
 import { useTheme } from "react-native-paper";
-import { usePasswordReset } from "@/hooks/usePasswordReset";
+import { useSignIn } from "@/hooks/useSignIn";
 
 export default function SignInScreen() {
   const [password, setPassword] = React.useState("");
   const [email, setEmail] = React.useState("");
-  const mutation = usePasswordReset();
+  const mutation = useSignIn();
 
-  const handlePasswordReset = () => {
+  const handleSignIn = () => {
     mutation.mutate({
+      password,
       email: email.toLowerCase(),
     });
   };
@@ -67,6 +68,14 @@ export default function SignInScreen() {
             style={[styles.textInputContainer, { marginTop: 10 }]}
             inputMode="email"
           />
+          <TextInput
+            placeholder="Password"
+            value={password}
+            onChangeText={setPassword}
+            style={styles.textInputContainer}
+            inputMode="text"
+            secureTextEntry
+          />
         </View>
         <View style={{}}>
           <Pressable
@@ -79,10 +88,10 @@ export default function SignInScreen() {
               alignItems: "center",
             }}
             disabled={mutation.isPending}
-            onPress={handlePasswordReset}
+            onPress={handleSignIn}
           >
             <Text style={{ color: "black", fontSize: 16 }}>
-              {mutation.isPending ? "Procesando..." : "Resetear Contraseña"}
+              {mutation.isPending ? "Procesando..." : "Iniciar Sesión"}
             </Text>
           </Pressable>
           <Text style={{ marginBottom: 10, marginHorizontal: "auto" }}>
@@ -99,6 +108,19 @@ export default function SignInScreen() {
               }}
             >
               <Text style={{ color: "white", fontSize: 16 }}>Regístrate</Text>
+            </Pressable>
+          </Link>
+          <Link href={"/auth/forgot-password"} asChild>
+            <Pressable
+              style={{
+                //backgroundColor: "#004aad",
+                //borderRadius: 10,
+                marginHorizontal: 30,
+                padding: 15,
+                alignItems: "center",
+              }}
+            >
+              <Text style={{ color: "#004aad", fontSize: 16 }}>Olvidé mi contraseña</Text>
             </Pressable>
           </Link>
 

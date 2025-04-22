@@ -18,10 +18,14 @@ const CardsCarousel: React.FC = () => {
     const colors: [string, string][] = [
         ["#5de0e6", "#004aad"],
         ["#E6A45D", "#AD2300"],
-        ["#A8F46B", "#187705"],
+        //["#A8F46B", "#187705"],
     ];
 
-    const currencies: string[] = ['USD', 'BS', 'CrediExpress'];
+    const currencies: string[] = [
+        'USD', 
+        'BS', 
+        //'CrediExpress'
+    ];
 
     const getAnimatedStyle = (index: number, totalCards: number) =>
         useAnimatedStyle(() => {
@@ -39,7 +43,7 @@ const CardsCarousel: React.FC = () => {
                     index + 1
                 ],
                 [0.8, 1, 0.8],
-                Extrapolation.EXTEND
+                Extrapolation.CLAMP
             );            
 
             return {
@@ -54,7 +58,7 @@ const CardsCarousel: React.FC = () => {
                 width={width}
                 height={width * 0.55}
                 autoPlay={false}
-                data={[0, 1, 2]}
+                data={[0, 1]}
                 defaultIndex={0}
                 onProgressChange={(offsetProgress, absoluteProgress) => {
                     progress.value = absoluteProgress;
